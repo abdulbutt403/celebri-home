@@ -2642,3 +2642,30 @@ label.active-input {
 
 
 }
+
+.catego{
+  display: flex;
+  border: 1px solid rgba(0, 0, 0, .3);
+  gap: 4px;
+  padding:  5.5px 10px;
+  border-radius: 9999px;
+  outline: none !important;
+  border: none;
+}
+
+.catego div{
+  font-size: 15px;
+}
+
+.catego span{
+  font-weight: 500;
+}
+
+.text-rs{
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.32px;
+  
+    color: rgb(103 107 95 / 1);
+    margin-bottom: 20px;
+}

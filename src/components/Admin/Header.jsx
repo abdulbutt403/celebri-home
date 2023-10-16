@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useResponsive from "../../Hooks/responsive";
 import {
     AccountIcon,
@@ -13,13 +13,16 @@ import {
     SpeakerIcon,
     TryFreeIcon,
   } from "../../svgs";
+import jwtDecode from "jwt-decode";
+import { baseUrl } from "../../constants";
+import axios from "axios";
 
 const AdminHeader = () => {
     const isMobile = useResponsive()
     return (
       <div
         className="flex flex-col-reverse w-full md:w-auto md:flex-row fixed md:right-2 md:left-2 md:top-2 bg-white md:rounded-full md:items-center items-stretch border-b border-sand"
-        style={{ boxShadow: "0 0 2px 0 rgba(0,0,0,0.05)", zIndex: '100000000', maxWidth: isMobile ? "100vw" : "99vw" }}
+        style={{ boxShadow: "0 0 2px 0 rgba(0,0,0,0.05)", zIndex: '1000', maxWidth: isMobile ? "100vw" : "99vw" }}
       >
         <a className="inline-block w-8 h-8 hidden md:flex md:mx-6">
           <Logo />
@@ -79,6 +82,34 @@ const AdminHeader = () => {
     const toggleDropdown = () => {
       setIsDropdownOpen(!isDropdownOpen);
     };
+
+    const token = localStorage.getItem('token')
+   
+  const userData = jwtDecode(token)
+  const [url, setUrl] = useState(null);
+
+
+  useEffect(() => {
+    fetchUser()
+   }, [])
+   
+   const fetchUser = async () => {
+     try {
+       const userId = userData._id;
+       const response = await axios.get(`${baseUrl}/users/${userId}`);
+ 
+       // Set the user data in the state
+       const user = response.data.user
+  
+       if(user.profilePic){
+       setUrl(`${baseUrl}/uploads/${user.profilePic}`)
+       }
+  
+     } catch (error) {
+       console.error(error);
+       // Handle errors appropriately
+     }
+   };
   
     return (
       <div className="flex-shrink-0 flex items-center mx-2 gap-x-2 md:mx-3 relative">
@@ -125,8 +156,8 @@ const AdminHeader = () => {
         </button>
         <div>
           <span aria-hidden="true" onClick={toggleDropdown}>
-            <div className="avt">
-              <span>H</span>
+            <div className="avt" style={{overflow: 'hidden'}}>
+              {url? <img src={url} style={{objectFit: 'cover'}}/> : <span>H</span>}
             </div>
           </span>
   
@@ -152,6 +183,7 @@ const AdminHeader = () => {
           borderRadius: "1.5rem",
           paddingLeft: "1.5rem",
           paddingRight: "1.5rem",
+          overflowX: 'hidden'
         }}
       >
         <div
@@ -221,7 +253,7 @@ const AdminHeader = () => {
                 <ul>
                   <DropdownItem Icon={AccountIcon} text={"My account"} />
                   <DropdownItem Icon={BillingIcon} text={"Billing"} />
-                  <DropdownItem Icon={CookieIcon} text={"Cookie preference"} />
+                  <DropdownItem Icon={CookieIcon} text={"Logout"} />
                 </ul>
             </div>
           </div>
@@ -247,8 +279,13 @@ const AdminHeader = () => {
   };
   
   export const DropdownItem = ({ Icon, text }) => {
+    const logout = () => {
+      localStorage.removeItem('token')
+      window.location.href='/login'
+    }
+    const navig = () => window.location.href="/admin/account"
     return (
-      <li className="cursor-pointer" style={{cursor: 'pointer'}} onClick={() => window.location.href="/admin/account"}>
+      <li className="cursor-pointer" style={{cursor: 'pointer'}} onClick={text.toLowerCase() === 'logout' ? logout :navig}>
         <a className="flex w-full items-center relative transition duration-75 ease-out w-full rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-black antialiased bg-white hover:bg-chalk active:bg-chalk border border-none p-4 md:py-3 md:rounded-md">
           <Icon />
           <p className="text-sm truncate ml-4">{text}</p>

@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminHeader from "../components/Admin/Header";
 import { PlusIcon, TryFreeIcon } from "../svgs";
 import ReactDevicePreview from "react-device-preview";
 import useResponsive from "../Hooks/responsive";
+import axios from "axios";
+import { baseUrl } from "../constants";
+import jwtDecode from "jwt-decode";
+import toast, { LoaderIcon, Toaster } from "react-hot-toast";
 
 export default function Appearance() {
   const isMobile = useResponsive();
@@ -26,7 +30,7 @@ export default function Appearance() {
               paddingTop: isMobile ? 0 : 70,
             }}
           >
-            <div style={{ width: isMobile? "92%" : "80%", margin: "auto" }}>
+            <div style={{ width: isMobile ? "92%" : "80%", margin: "auto" }}>
               <h3 className="section__title" style={textStyleh3}>
                 Profile
               </h3>
@@ -64,7 +68,70 @@ export default function Appearance() {
 }
 
 const AddLinkPanel = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const token = localStorage.getItem('token')
+  const userData = jwtDecode(token)
+  const [url, setUrl] = useState(null);
+  const [givenName, setGivenName] = useState("");
+  const [bio, setBio] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const isMobile = useResponsive();
+
+  useEffect(() => {
+   fetchUser()
+  }, [])
+  
+  const fetchUser = async () => {
+    try {
+      const userId = userData._id;
+      const response = await axios.get(`${baseUrl}/users/${userId}`);
+
+      // Set the user data in the state
+      const user = response.data.user
+      setGivenName(user.givenName)
+      setBio(user.bio)
+      if(user.profilePic){
+      setUrl(`${baseUrl}/uploads/${user.profilePic}`)
+      setSelectedImage('temp')
+      }
+    } catch (error) {
+      console.error(error);
+      // Handle errors appropriately
+    }
+  };
+
+  const handleEditProfile = async () => {
+    setLoading(true)
+    try {
+      // Create a FormData object to send the data and file
+      const formData = new FormData();
+      formData.append('givenName', givenName);
+      formData.append('userId', userData._id)
+      formData.append('bio', bio);
+    // Check if selectedImage is a valid File object
+    if (selectedImage instanceof File) {
+      formData.append('profilePicture', selectedImage);
+    }
+
+
+      // Make a POST request to the edit profile API
+      const response = await axios.post(`${baseUrl}/users/editprofile`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log(response.data); // Handle the response as needed
+      toast.success('Profile updated !')
+      setLoading(false)
+    } catch (error) {
+      console.error(error);
+      setLoading(false)
+      // Handle errors appropriately
+    }
+  };
+
   return (
     <div style={boxWrap}>
       <div style={{ position: "relative", minHeight: "48px" }}>
@@ -74,30 +141,75 @@ const AddLinkPanel = () => {
               className="flex items-center mb-16"
               style={{ padding: "1.5rem" }}
             >
-              <div
-                className=" rounded-full flex items-center justify-center"
-                style={{
-                  fontWeight: "400",
-                  fontSize: "32px",
-                  backgroundColor: "rgb(0, 0, 0)",
-                  height: isMobile? 80 : 96,
-                  width: 116,
-                  marginRight: 20,
-                  borderRadius: "100%",
-                }}
-              >
-                <span className="text-white">H</span>
-              </div>
+              {selectedImage && (
+                <div>
+                  <img
+                    src={url}
+                    alt="Selected Image"
+                    style={{
+                      fontWeight: "400",
+                      fontSize: "32px",
+                      backgroundColor: "rgb(0, 0, 0)",
+                      height: isMobile ? 80 : 96,
+                      width: 96,
+                      marginRight: 43,
+                      objectFit: "cover",
+                      borderRadius: "100%",
+                    }}
+                  />
+                </div>
+              )}
+              {!selectedImage && (
+                <div
+                  className=" rounded-full flex items-center justify-center"
+                  style={{
+                    fontWeight: "400",
+                    fontSize: "32px",
+                    backgroundColor: "rgb(0, 0, 0)",
+                    height: isMobile ? 80 : 96,
+                    width: 116,
+                    marginRight: 20,
+                    borderRadius: "100%",
+                  }}
+                >
+                  <span className="text-white">H</span>
+                </div>
+              )}
 
               <div className="space-y-2 w-full">
-                <PickImageButton />
-                <RemoveButton />
+                <PickImageButton
+                  setSelectedImage={setSelectedImage}
+                  setUrl={setUrl}
+                />
+                <RemoveButton
+                  selectedImage={selectedImage}
+                  setSelectedImage={setSelectedImage}
+                  setUrl={setUrl}
+                />
               </div>
             </div>
-            <TitleField />
-            <TextField />
+            <TitleField givenName={givenName} setGivenName={setGivenName}/>
+            <TextField setBio={setBio} bio={bio}/>
+            <button
+              style={{
+                backgroundColor: "rgb(93 24 162 / 1)",
+                width: '120px',
+                color: "white",
+                borderRadius: "9999px",
+                marginLeft: 40,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+
+              }}
+              onClick={handleEditProfile}
+              className="relative transition duration-75 ease-out w-full h-10 px-1 rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-black antialiased w-full hover:bg-primary-alt active:bg-primary-alt"
+            >
+              {loading? <LoaderIcon/> : 'Update'}
+            </button>
+
             <hr
-              style={{ height: 10, marginTop: 40 }}
+              style={{ height: 10, marginTop: 26,  }}
               classname="my-7 bg-sand w-full"
             />
 
@@ -112,7 +224,7 @@ const AddLinkPanel = () => {
                 justifyContent: "start",
                 width: "90%",
                 margin: "auto",
-                marginTop: 18,
+                marginTop: 10,
               }}
             >
               <PlusIcon />
@@ -130,9 +242,44 @@ const AddLinkPanel = () => {
   );
 };
 
-const PickImageButton = () => {
+const PickImageButton = ({ setSelectedImage, setUrl }) => {
+  const [inputKey, setInputKey] = useState(Date.now());
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedImage(file);
+
+      // Display the selected image as a preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const imageUrl = e.target.result;
+        setInputKey(Date.now());
+        setUrl(imageUrl);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
-    <div className="w-full">
+    <div className="w-full" style={{ position: "relative" }}>
+      <input
+        type="file"
+        key={inputKey}
+        accept="image/*"
+        id="imageInput"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 99999,
+          opacity: 0,
+          cursor: "pointer",
+        }}
+        onChange={handleImageChange}
+      />
       <button
         style={{
           backgroundColor: "rgb(93 24 162 / 1)",
@@ -149,18 +296,22 @@ const PickImageButton = () => {
   );
 };
 
-const RemoveButton = () => {
+const RemoveButton = ({ selectedImage, setSelectedImage, setUrl }) => {
   return (
     <button
       style={{
         backgroundColor: "white",
         borderColor: "#D97706",
-        color: "rgba(0,0,0,0.4)",
-        border: "1px solid rgba(0,0,0,0.1)",
+        color: "rgba(0,0,0,0.7)",
+        border: "1px solid rgba(0,0,0,0.7)",
         borderRadius: "9999px",
       }}
       className="relative transition duration-75 ease-out w-full h-12 px-4 rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-black antialiased w-full hover:bg-primary-alt active:bg-primary-alt"
-      disabled={true}
+      disabled={selectedImage ? false : true}
+      onClick={() => {
+        setSelectedImage(null);
+        setUrl(null);
+      }}
     >
       <span className="flex items-center justify-center">
         <span className="block font-semibold text-md">Remove</span>
@@ -169,7 +320,7 @@ const RemoveButton = () => {
   );
 };
 
-const TitleField = () => {
+const TitleField = ({givenName, setGivenName}) => {
   return (
     <div
       className="flex rounded-[10px] leading-none border-solid border-2 overflow-hidden w-full border-transparent"
@@ -180,7 +331,7 @@ const TitleField = () => {
           id="setting-page-title"
           data-testid="ProfileTitleInput"
           type="text"
-          placeholder="Profile Title"
+          placeholder="Your Name"
           aria-invalid="false"
           aria-labelledby="label-ltclid74"
           style={{
@@ -199,7 +350,8 @@ const TitleField = () => {
             paddingLeft: 10,
             transition: "all 0.3s ease-out",
           }}
-          value="@hafiz402"
+          value={givenName}
+          onChange={(e) => setGivenName(e.target.value)}
         />
         <label
           id="label-ltclid74"
@@ -210,19 +362,19 @@ const TitleField = () => {
             color: "#A1A1AA",
             fontSize: "14px",
             transition: "all 0.3s ease-out",
-            transform: "translateY(3px) scale(0.85)",
+            transform: "translate(-4px,4px) scale(0.85)",
             transformOrigin: "0",
           }}
           htmlFor="setting-page-title"
         >
-          Profile Title
+          Enter your Name
         </label>
       </div>
     </div>
   );
 };
 
-const TextField = () => {
+const TextField = ({bio, setBio}) => {
   return (
     <div style={{ width: "90%", margin: "auto", marginTop: 10 }}>
       <div className="flex rounded-[10px] leading-none border-solid border-2 overflow-hidden w-full border-transparent">
@@ -233,6 +385,8 @@ const TextField = () => {
             type="text"
             placeholder="Bio"
             aria-invalid="false"
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
             aria-labelledby="label-ltclid74"
             style={{
               fontFamily: "Inter",
@@ -672,7 +826,6 @@ const CustomThemeButton = ({ bgImage, createOwn, text }) => {
     </button>
   );
 };
-
 
 const boxStyle = {
   height: "534px",

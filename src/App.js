@@ -26,13 +26,26 @@ import Signup from "./pages/Signup";
 import Terms from "./pages/Terms";
 import TrustCenter from "./pages/TrustCenter";
 import Users from "./pages/Users";
+import { Toaster } from "react-hot-toast";
+import Reset from "./pages/Reset";
 
 function App() {
   return (
+    <>
+    <Toaster toastOptions={{
+    className: '',
+    style: {
+      border: '1px solid #713200',
+      padding: '16px',
+      color: '#713200',
+      zIndex: 99999999
+    },
+  }}/>
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/reset" element={<Reset />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/users" element={<Users />} />
@@ -60,6 +73,7 @@ function App() {
         
       </Routes>
     </Router>
+    </>
   );
 }
 

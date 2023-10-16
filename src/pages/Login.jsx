@@ -1,10 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import Field from "../components/Common/Field";
 import useResponsive from "../Hooks/responsive";
 import { LogoFullIcon } from "../svgs";
+import axios from "axios";
+import { baseUrl } from "../constants";
+import { useNavigate } from "react-router-dom";
+import { LoaderIcon } from "react-hot-toast";
 
 const Login = () => {
   const isMobile = useResponsive()
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate()
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = () => {
+    setLoading(true)
+    // Prepare the data to send in the request body
+    const userData = {
+      userName,
+      password,
+    };
+
+   
+    axios.post(`${baseUrl}/users/signin`, userData)
+      .then(response => {
+
+        const token = response.data.token;
+        localStorage.setItem('token', token);
+
+        setTimeout(() => {
+          navigate('/admin/links')
+        }, 1000);
+      })
+      .catch(error => {
+        // Handle login errors, such as displaying an error message
+        console.error(error);
+        setLoading(false)
+      });
+  };
+
   return (
     <div className="login-wrap">
       <div className="logo-wrap">
@@ -15,14 +50,13 @@ const Login = () => {
       <main className="login-main">
         <div className="login-form-wrap">
           <h1 className="login-heading">Log in to your CelebriLinks</h1>
-          <Field type="text" placeholder="Username" stickyLabel />
-          <Field type="password" placeholder="password" />
-          <button className="login-page-btn">Log in</button>
+          <Field type="text" placeholder="Username" stickyLabel value={userName} onChange={(e) => setUserName(e.target.value)} />
+          <Field type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)}  />
+          <button className="login-page-btn" onClick={handleLogin}>{loading? <LoaderIcon/> : `Log in`}</button>
           <div className="forgot">
-            <p>
-              <a>Forgot password?</a>
+            <p style={{cursor: 'pointer'}}>
+              <a onClick={() =>  navigate('/reset')}>Forgot password?</a>
             </p>
-            &nbsp; • &nbsp;<a>Forgot username?</a>
           </div>
           <div
             style={{
@@ -30,10 +64,11 @@ const Login = () => {
               alignItems: "center",
               justifyContent: "center",
               marginTop: "2rem",
+              cursor: 'pointer'
             }}
           >
             <p className="dd">
-              Don't have an account? <a className="under">Sign up</a>
+              Don't have an account? <a className="under"  onClick={() =>  navigate('/signup')}>Sign up</a>
             </p>
           </div>
 
