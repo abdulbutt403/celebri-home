@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import AdminHeader from "../components/Admin/Header";
 import ReactDevicePreview from "react-device-preview";
 import useResponsive from "../Hooks/responsive";
@@ -6,6 +6,8 @@ import useResponsive from "../Hooks/responsive";
 export default function Admin() {
   const [buttonPressed, setButtonPressed] = useState(false);
   const isMobile = useResponsive()
+
+
   return (
     <div className="admin-panel">
       <AdminHeader />

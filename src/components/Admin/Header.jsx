@@ -84,8 +84,12 @@ const AdminHeader = () => {
     };
 
     const token = localStorage.getItem('token')
+
+    if(!token){
+      window.location.href= '/login'
+    }
    
-  const userData = jwtDecode(token)
+  const userData = token ?  jwtDecode(token) : {}
   const [url, setUrl] = useState(null);
 
 
@@ -110,7 +114,7 @@ const AdminHeader = () => {
        // Handle errors appropriately
      }
    };
-  
+
     return (
       <div className="flex-shrink-0 flex items-center mx-2 gap-x-2 md:mx-3 relative">
         <button

@@ -57,9 +57,7 @@ function App() {
         <Route path="/admin/appearance" element={<Appearance />} />
         <Route path="/admin/account" element={<Account />} />
         <Route path="/admin/settings" element={<Settings />} />
-
         <Route path="/admin/analytics" element={<Analytics />} />
-  
         <Route path="/help" element={<Help />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
