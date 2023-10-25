@@ -2,50 +2,135 @@ import React, { useLayoutEffect, useState } from "react";
 import AdminHeader from "../components/Admin/Header";
 import ReactDevicePreview from "react-device-preview";
 import useResponsive from "../Hooks/responsive";
+import axios from "axios";
+import { useEffect } from "react";
+import { baseUrl } from "../constants";
+import jwtDecode from "jwt-decode";
+import toast, { LoaderIcon } from "react-hot-toast";
+
+const imageBox = {
+  height: "22%",
+  width: "100%",
+  display: "flex",
+  alignItems: "center",
+  flexDirection: "column",
+  justifyContent: "center",
+  marginTop: 50,
+};
+
+const imageWrap = {
+  height: 110,
+  width: 110,
+  borderRadius: "50%",
+  overflow: "hidden",
+};
+
+const titleWrap = {
+  height: 110,
+  width: 110,
+  borderRadius: "50%",
+  overflow: "hidden",
+  background: "gray",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+};
 
 export default function Admin() {
   const [buttonPressed, setButtonPressed] = useState(false);
-  const isMobile = useResponsive()
+  const isMobile = useResponsive();
 
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    window.location.href = "/login";
+  }
+
+  const userData = token ? jwtDecode(token) : {};
+  const [url, setUrl] = useState(null);
+  const [userName, setUserName] = useState(null);
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const fetchUser = async () => {
+    try {
+      const userId = userData._id;
+      const response = await axios.get(`${baseUrl}/users/${userId}`);
+
+      // Set the user data in the state
+      const user = response.data.user;
+
+      console.log({ user });
+
+      setUserName(user.userName);
+
+      if (user.profilePic) {
+        setUrl(`${baseUrl}/uploads/${user.profilePic}`);
+      }
+    } catch (error) {
+      console.error(error);
+      // Handle errors appropriately
+    }
+  };
 
   return (
     <div className="admin-panel">
       <AdminHeader />
       <main>
-        <div style={{ display: "flex", minHeight: "100vh", paddingTop: 10, flexDirection: isMobile? 'column-reverse' : 'row' }}>
         <div
+          style={{
+            display: "flex",
+            minHeight: "100vh",
+            paddingTop: 10,
+            flexDirection: isMobile ? "column-reverse" : "row",
+          }}
+        >
+          <div
             style={{
-              flexBasis:  isMobile ? "100%":"40%",
+              flexBasis: isMobile ? "100%" : "40%",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              paddingTop: isMobile ? 70: 170,
+              paddingTop: isMobile ? 70 : 170,
               paddingLeft: isMobile ? 0 : 180,
-         
-            
             }}
           >
-            <div style={{width: '100%' ,  paddingLeft: 70}}>
-            <ReactDevicePreview device="galaxynote8" scale="0.6" >
-            </ReactDevicePreview>
+            <div style={{ width: "100%", paddingLeft: 70 }}>
+              <ReactDevicePreview device="galaxynote8" scale="0.6">
+                <div style={imageBox}>
+                  {url ? (
+                    <div style={imageWrap}>
+                      <img src={url} style={{ objectFit: "cover" }} />
+                    </div>
+                  ) : (
+                    <div style={titleWrap}>
+                      <p style={{ color: "#fff", fontSize: 40 }}>A</p>
+                    </div>
+                  )}
+                  <h5 style={{ fontSize: 24, fontWeight: 500, marginTop: 20 }}>
+                    {userName ? `@${userName}` : `User`}
+                  </h5>
+                </div>
+              </ReactDevicePreview>
             </div>
           </div>
           <div
             style={{
-              flexBasis:  isMobile ? "100%":"60%",
+              flexBasis: isMobile ? "100%" : "60%",
               padding: "0 0.5%",
               borderLeft: "1px solid rgba(0,0,0,0.1)",
-              paddingTop: isMobile? 170:  70,
+              paddingTop: isMobile ? 170 : 70,
             }}
           >
-            <LiveUrl/>
+            <LiveUrl />
             {!buttonPressed ? (
               <AddLinkButton setButtonPressed={setButtonPressed} />
             ) : (
               <AddLinkPanel setButtonPressed={setButtonPressed} />
             )}
           </div>
-    
         </div>
       </main>
     </div>
@@ -53,12 +138,15 @@ export default function Admin() {
 }
 
 const LiveUrl = () => {
-
-  const isMobile = useResponsive()
+  const isMobile = useResponsive();
   return (
     <div
       className="md:mx-4 md:mt-2 flex flex-col xl:flex-row md:rounded-lg py-3 px-4 justify-between items-start xl:items-center text-sm bg-white shadow-inner-bottom-light"
-      style={isMobile ? { width: 360, height: 70, margin: 'auto' , borderRadius: 8 }:{ height: 70 }}
+      style={
+        isMobile
+          ? { width: 360, height: 70, margin: "auto", borderRadius: 8 }
+          : { height: 70 }
+      }
     >
       <div className="flex flex-row max-h-min w-full">
         <div className="leading-[2] md:flex md:flex-col lg:flex-row md:justify-between md:flex-grow w-full">
@@ -157,8 +245,7 @@ const AddLinkButton = ({ setButtonPressed }) => {
 };
 
 const AddLinkPanel = ({ setButtonPressed }) => {
-
-  const isMobile = useResponsive()
+  const isMobile = useResponsive();
 
   return (
     <div
@@ -252,7 +339,7 @@ const AddLinkPanel = ({ setButtonPressed }) => {
                 gap: "2px",
                 paddingLeft: "10px",
                 marginBottom: 40,
-                overflow: isMobile ? 'scroll': 'auto'
+                overflow: isMobile ? "scroll" : "auto",
               }}
             >
               <SocialCard
@@ -300,7 +387,7 @@ const AddLinkPanel = ({ setButtonPressed }) => {
                 gap: "10px",
                 paddingLeft: "10px",
                 marginBottom: 60,
-                overflow: isMobile ? 'scroll': 'auto'
+                overflow: isMobile ? "scroll" : "auto",
               }}
             >
               <SocialButton
@@ -322,6 +409,9 @@ const AddLinkPanel = ({ setButtonPressed }) => {
 };
 
 const LinkInput = () => {
+  const [url, setUrl] = useState("");
+  const [Loading, setLoading] = useState(false);
+
   const containerStyle = {
     display: "flex",
     gap: "1rem",
@@ -361,6 +451,47 @@ const LinkInput = () => {
     outline: "none",
   };
 
+  const handleAddLink = async () => {
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+      toast.error(
+        'Please add "http://" or "https://" at the beginning of the URL.'
+      );
+    } else if (!url.includes(".com")) {
+      toast.error('The URL must contain ".com".');
+    } else {
+     
+      setLoading(true)
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setLoading(false)
+        toast.error('Session is Expired !')
+
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 1000);
+
+  
+      }
+      const userData = token ? jwtDecode(token) : {};
+
+      try {
+        // Send a POST request to your add API
+        const userId = userData._id;
+        await axios.post(`${baseUrl}/users/${userId}/link/add`, {
+          icon: "",
+          title: "",
+          href: url,
+        });
+        toast.success("Link added successfully");
+        setLoading(false)
+        setUrl(""); // Clear the input field
+      } catch (error) {
+        setLoading(false)
+        toast.error("Error adding the link");
+      }
+    }
+  };
+
   return (
     <div style={containerStyle}>
       <div style={inputContainerStyle}>
@@ -375,6 +506,8 @@ const LinkInput = () => {
             aria-labelledby="label-ltclid87"
             id="input-ltclid87"
             style={inputStyle}
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
           />
         </div>
       </div>
@@ -382,7 +515,8 @@ const LinkInput = () => {
         <button
           style={addButtonStyle}
           type="button"
-          disabled
+          disabled={!url}
+          onClick={handleAddLink}
           data-testid="LinkEditor_Single_Add_Link_Add"
           data-heapid="SingleAddLinkAdd"
         >
@@ -396,7 +530,7 @@ const LinkInput = () => {
             <span
               style={{ display: "block", fontSize: "1rem", fontWeight: "bold" }}
             >
-              Add
+              {Loading ? <LoaderIcon/> : `Add`}
             </span>
           </span>
         </button>
@@ -437,9 +571,6 @@ const InterestSection = ({ title }) => {
     fill: "currentColor",
     transform: "rotate(-90deg)",
   };
-
-
-  
 
   return (
     <div style={containerStyle}>
