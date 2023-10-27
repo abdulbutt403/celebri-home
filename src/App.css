@@ -2669,3 +2669,20 @@ label.active-input {
     color: rgb(103 107 95 / 1);
     margin-bottom: 20px;
 }
+
+
+.link-bt:hover{
+  transform: scale(1.02);
+}
+
+.link-box{
+  background: #fff;
+  box-shadow: 0 0 #0000,  0 0 #0000, inset 0px -1px 0px #e0e2d9;
+  width: 90%;
+  border-radius: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.p-lg{
+  padding: 1.5rem
+}

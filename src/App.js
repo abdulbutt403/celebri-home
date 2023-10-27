@@ -29,6 +29,7 @@ import Users from "./pages/Users";
 import { Toaster } from "react-hot-toast";
 import Reset from "./pages/Reset";
 import PrivateRoutes from "./PrivateRoute";
+import ShareProfile from "./pages/ShareProfile";
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
           <Route element={<PrivateRoutes/>}>
             <Route path="/admin" element={<Navigate to="/admin/links" />} />
             <Route path="/admin/links" element={<Admin />} />
+            <Route path="/user/:id" element={<ShareProfile />} />
             <Route path="/admin/appearance" element={<Appearance />} />
             <Route path="/admin/account" element={<Account />} />
             <Route path="/admin/settings" element={<Settings />} />

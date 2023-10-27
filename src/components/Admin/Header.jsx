@@ -226,7 +226,7 @@ const AdminHeader = () => {
                         @hafiz402
                       </p>
                       <p className="text-concrete text-xs mt-[2px] text-ellipsis whitespace-nowrap overflow-hidden">
-                        linktr.ee/hafiz402
+                        http://localhost:3000/hafiz402
                       </p>
                     </span>
                   </span>

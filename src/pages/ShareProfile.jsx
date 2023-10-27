@@ -9,6 +9,7 @@ import jwtDecode from "jwt-decode";
 import toast, { LoaderIcon } from "react-hot-toast";
 import LinkEditor from "../components/LinkEditor";
 import { copyToClipboard } from "../utils";
+import { useParams } from "react-router-dom";
 
 const imageBox = {
   height: "22%",
@@ -54,17 +55,14 @@ const linkButton = {
   transition: "transform 0.15s cubic-bezier(0, 0.2, 0.5, 3) 0s",
 };
 
-export default function Admin() {
+export default function ShareProfile() {
   const [buttonPressed, setButtonPressed] = useState(false);
   const isMobile = useResponsive();
 
-  const token = localStorage.getItem("token");
+  const params = useParams();
 
-  if (!token) {
-    window.location.href = "/login";
-  }
+  console.log(params);
 
-  const userData = token ? jwtDecode(token) : {};
   const [url, setUrl] = useState(null);
   const [userName, setUserName] = useState(null);
   const [userLinks, setUserLinks] = useState([]);
@@ -75,7 +73,7 @@ export default function Admin() {
 
   const fetchUser = async () => {
     try {
-      const userId = userData._id;
+      const userId = params.id;
       const response = await axios.get(`${baseUrl}/users/${userId}`);
 
       // Set the user data in the state
@@ -95,102 +93,54 @@ export default function Admin() {
 
   return (
     <div className="admin-panel">
-      <AdminHeader />
       <main>
         <div
           style={{
             display: "flex",
-            minHeight: "100vh",
-            paddingTop: 10,
-            flexDirection: isMobile ? "column-reverse" : "row",
+            height: "100vh",
+            border: "1px solid red",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          <div
-            style={{
-              flexBasis: isMobile ? "100%" : "40%",
-              display: "flex",
-              justifyContent: "center",
-              paddingTop: isMobile ? 70 : 170,
-              paddingLeft: isMobile ? 0 : 180,
-            }}
-          >
-            <div style={{ width: "100%", paddingLeft: 70 }}>
-              <ReactDevicePreview device="galaxynote8" scale="0.6">
-                <div
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    background: "#C2C2C2",
-                    paddingTop: 50,
-                  }}
-                >
-                  <div style={imageBox}>
-                    {url ? (
-                      <div style={imageWrap}>
-                        <img src={url} style={{ objectFit: "cover" }} />
-                      </div>
-                    ) : (
-                      <div style={titleWrap}>
-                        <p style={{ color: "#fff", fontSize: 40 }}>A</p>
-                      </div>
-                    )}
-                    <h5
-                      style={{ fontSize: 24, fontWeight: 500, marginTop: 20 }}
-                    >
-                      {userName ? `@${userName}` : `User`}
-                    </h5>
-                  </div>
-                  <div style={linksContainer}>
-                    {userLinks.map((link) => (
-                      <button
-                        key={link._id}
-                        style={linkButton}
-                        className="link-bt"
-                        onClick={() => window.open(link.href)}
-                      >
-                        {link.title || "No Title added"}
-                      </button>
-                    ))}
-                  </div>
+          <div style={{transform: 'translate(88px, 200px)'}}>
+            <ReactDevicePreview device="galaxynote8" scale="0.6">
+              <div
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  background: "#C2C2C2",
+                  paddingTop: 50,
+                }}
+              >
+                <div style={imageBox}>
+                  {url ? (
+                    <div style={imageWrap}>
+                      <img src={url} style={{ objectFit: "cover" }} />
+                    </div>
+                  ) : (
+                    <div style={titleWrap}>
+                      <p style={{ color: "#fff", fontSize: 40 }}>A</p>
+                    </div>
+                  )}
+                  <h5 style={{ fontSize: 24, fontWeight: 500, marginTop: 20 }}>
+                    {userName ? `@${userName}` : `User`}
+                  </h5>
                 </div>
-              </ReactDevicePreview>
-            </div>
-          </div>
-          <div
-            style={{
-              flexBasis: isMobile ? "100%" : "60%",
-              padding: "0 0.5%",
-              borderLeft: "1px solid rgba(0,0,0,0.1)",
-              paddingTop: isMobile ? 170 : 70,
-            }}
-          >
-            <LiveUrl />
-            {!buttonPressed ? (
-              <AddLinkButton setButtonPressed={setButtonPressed} />
-            ) : (
-              <AddLinkPanel setButtonPressed={setButtonPressed} fetchUser={fetchUser} />
-            )}
-
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "start",
-                marginTop: 20,
-              }}
-            >
-              {userLinks.map((link) => (
-                <LinkEditor
-                  key={link._id}
-                  titleProp={link.title}
-                  urlProp={link.href}
-                  iconProp={link.icon}
-                  idProp={link._id}
-                  fetchData={fetchUser}
-                />
-              ))}
-            </div>
+                <div style={linksContainer}>
+                  {userLinks.map((link) => (
+                    <button
+                      key={link._id}
+                      style={linkButton}
+                      className="link-bt"
+                      onClick={() => window.open(link.href)}
+                    >
+                      {link.title || "No Title added"}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </ReactDevicePreview>
           </div>
         </div>
       </main>
@@ -209,10 +159,9 @@ const LiveUrl = () => {
       window.location.href = "/login";
     }, 1000);
   }
-  const {userData} = token ? jwtDecode(token) : {};
+  const { userData } = token ? jwtDecode(token) : {};
 
-  const profilePath = `${window.location.origin}/user/${userData._id}`
-
+  const profilePath = `${window.location.origin}/user/${userData.userName}`;
 
   return (
     <div
@@ -230,20 +179,22 @@ const LiveUrl = () => {
               Your CelebriLinks is live:{" "}
               <span
                 className="underline max-w-[200px] truncate inline-block align-bottom"
-                style={{ fontWeight: 300 , cursor: 'pointer'}}
+                style={{ fontWeight: 300, cursor: "pointer" }}
                 onClick={() => window.open(profilePath)}
               >
-                    {profilePath}
+                {profilePath}
               </span>
             </p>
-
           </div>
           <button
             className="relative transition duration-75 ease-out w-full h-2xl px-md rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-black antialiased text-black hidden md:block max-w-min whitespace-nowrap mt-2 md:mt-0 bg-white border border-sand hover:bg-chalk hover:border-chalk active:bg-chalk active:border-chalk"
             type="button"
             style={{ padding: 8, borderRadius: 9999 }}
           >
-            <span className="flex items-center justify-center block font-semibold text-md" onClick={() => copyToClipboard(profilePath)}>
+            <span
+              className="flex items-center justify-center block font-semibold text-md"
+              onClick={() => copyToClipboard(profilePath)}
+            >
               Copy URL
             </span>
           </button>
@@ -396,7 +347,7 @@ const AddLinkPanel = ({ setButtonPressed, fetchUser }) => {
                 </div>
               </div>
             </div>
-            <LinkInput fetchUser={fetchUser}/>
+            <LinkInput fetchUser={fetchUser} />
             <hr
               style={{ height: 10, marginTop: 40 }}
               classname="my-7 bg-sand w-full"
@@ -477,7 +428,7 @@ const AddLinkPanel = ({ setButtonPressed, fetchUser }) => {
   );
 };
 
-const LinkInput = ({fetchUser}) => {
+const LinkInput = ({ fetchUser }) => {
   const [url, setUrl] = useState("");
   const [Loading, setLoading] = useState(false);
 
@@ -548,7 +499,7 @@ const LinkInput = ({fetchUser}) => {
           title: "",
           href: url,
         });
-        fetchUser()
+        fetchUser();
         toast.success("Link added successfully");
         setLoading(false);
         setUrl(""); // Clear the input field

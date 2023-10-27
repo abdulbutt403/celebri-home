@@ -612,3 +612,293 @@ export const WhatIcon = () => (
 </svg>
 )
 
+export const ExampleIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className=""
+    role="img"
+    aria-hidden={true}
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M2 14V11.7071L9.5 4.20708L11.7929 6.49998L4.29289 14H2ZM12.5 5.79287L13.7929 4.49998L11.5 2.20708L10.2071 3.49998L12.5 5.79287ZM11.1464 1.14642L1.14645 11.1464L1 11.5V14.5L1.5 15H4.5L4.85355 14.8535L14.8536 4.85353V4.14642L11.8536 1.14642H11.1464Z"
+      fill="currentColor"
+    ></path>
+  </svg>
+);
+
+
+export const CustomIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className=""
+    role="img"
+    aria-hidden={true}
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M2 14V11.7071L9.5 4.20708L11.7929 6.49998L4.29289 14H2ZM12.5 5.79287L13.7929 4.49998L11.5 2.20708L10.2071 3.49998L12.5 5.79287ZM11.1464 1.14642L1.14645 11.1464L1 11.5V14.5L1.5 15H4.5L4.85355 14.8535L14.8536 4.85353V4.14642L11.8536 1.14642H11.1464Z"
+      fill="currentColor"
+    ></path>
+  </svg>
+);
+
+export const CustomIcon2 = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    role="img"
+    aria-hidden={false}
+    fill="currentColor"
+    viewBox="0 0 16 16"
+    width="16px"
+    height="16px"
+  >
+    <title></title>
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className=""
+      role="img"
+      aria-hidden={true}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M10.6464 3.85353L11 4.20708L11.7071 3.49998L11.3536 3.14642L8.35355 0.146423H7.64645L4.64645 3.14642L4.29289 3.49998L5.00
+        4.20708L5.35355 3.85353L7.5 1.70708V9.49998V9.99998H8.5V9.49998V1.70708L10.6464 3.85353ZM1 5.5L1.5 5H4V6H2V15H14V6H12V5H14.5L15 5.5V15.5L14.5 16H1.5L1 15.5V5.5Z"
+        fill="currentColor"
+      ></path>
+    </svg>
+  </svg>
+);
+
+
+
+
+
+
+export const MoveIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className=""
+    role="img"
+    aria-hidden="false"
+    aria-labelledby="ltclid51_title"
+  >
+    <title id="ltclid51_title">Move</title>
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M5 4C5.55228 4 6 3.55228 6 3C6 2.44772 5.55228 2 5 2C4.44772 2 4 2.44772 4 3C4 3.55228 4.44772 4 5 4ZM6 8C6 8.55228 5.55228 9 5 9C4.44772 9 4 8.55228 4 8C4 7.44772 4.44772 7 5 7C5.55228 7 6 7.44772 6 8ZM6 13C6 13.5523 5.55228 14 5 14C4.44772 14 4 13.5523 4 13C4 12.4477 4.44772 12 5 12C5.55228 12 6 12.4477 6 13ZM12 8C12 8.55228 11.5523 9 11 9C10.4477 9 10 8.55228 10 8C10 7.44772 10.4477 7 11 7C11.5523 7 12 7.44772 12 8ZM11 14C11.5523 14 12 13.5523 12 13C12 12.4477 11.5523 12 11 12C10.4477 12 10 12.4477 10 13C10 13.5523 10.4477 14 11 14ZM12 3C12 3.55228 11.5523 4 11 4C10.4477 4 10 3.55228 10 3C10 2.44772 10.4477 2 11 2C11.5523 2 12 2.44772 12 3Z"
+      fill="currentColor"
+    >
+      #
+    </path>
+  </svg>
+);
+
+
+export const CustomIcon3 = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className=""
+    role="img"
+    aria-hidden={true}
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M1 5C1 3.34315 2.34315 2 4 2C5.65685 2 7 3.34315 7 5V8H4C2.34315 8 1 6.65685 1 5ZM4 1C6.20914 1 8 2.79086 8 5V8H13.7929L11.1464 5.35355L11.8536 4.64645L15.3536 8.14645V8.85355L11.8536 12.3536L11.1464 11.6464L13.7929 9H8V16H7V9H4C1.79086 9 0 7.20914 0 5C0 2.79086 1.79086 1 4 1Z"
+      fill="currentColor"
+    ></path>
+  </svg>
+);
+
+
+
+export const StarIcon = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className=""
+      role="img"
+      aria-hidden="true"
+      aria-labelledby=""
+    >
+      <path
+        d="M8.00526 12.9372L3.36977 15.5L4.25526 10.0719L0.5 6.22816L5.68225 5.4384L8 0.5L10.3177 5.4384L15.5 6.22816L11.7447 10.0719L12.6302 15.5L8.00526 12.9372Z"
+        stroke="currentColor" // You can set the color here
+        strokeWidth="1.07692"  // You can set the stroke width here
+        strokeLinecap="round"
+        strokeLinejoin="bevel"
+      />
+    </svg>
+  );
+}
+
+
+
+
+export const SimpleIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-hidden="false"
+      fill="currentColor"
+      viewBox="0 0 16 16"
+      width="16px"
+      height="16px"
+    >
+      <title></title>
+      <g>
+        <path
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M3.5.5v2M10.5.5v2M11.5 9.5v2h2"
+        ></path>
+        <circle
+          cx="11.5"
+          cy="11.5"
+          r="4"
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        ></circle>
+        <path
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M13.5 5.85V2.5a1 1 0 00-1-1h-11a1 1 0 00-1 1v10a1 1 0 001 1h4.351"
+        ></path>
+      </g>
+    </svg>
+  );
+}
+
+
+export function AudienceIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      className=""
+      role="img"
+      aria-hidden={false}
+      aria-labelledby="ltclid61_title"
+    >
+      <title id="ltclid61_title">Close</title>
+      <path
+        d="M13.6283 3.1151L14 2.74339L13.2566 2L12.8849 2.3717L13.6283 3.1151ZM2.3717 12.885L2.7434 13.2566L2.7434 14L3.11509 13.6284L2.3717 12.885ZM3.11509 2.3717L2.7434 2L2 2.74339L2.3717 3.1151L3.11509 2.3717ZM12.8849 13.6284L13.2566 14L14 13.2566L13.6283 12.885L12.8849 13.6284ZM12.8849 2.3717L2.3717 12.885L3.11509 13.6284L13.6283 3.1151L12.8849 2.3717ZM2.3717 3.1151L12.8849 13.6284L13.6283 12.885L3.11509 2.3717L2.3717 3.1151Z"
+        fill="currentColor"
+      ></path>
+    </svg>
+  );
+}
+
+export function LockIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className=" "
+      role="img"
+      aria-hidden="true"
+      aria-labelledby=" "
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M4 3.99976C4 1.79062 5.79086 -0.000244141 8 -0.000244141C10.2091 -0.000244141 12 1.79062 12 3.99976V4.99976H14.5L15 5.49976V15.4998L14.5 15.9998H1.5L1 15.4998V5.49976L1.5 4.99976H4V3.99976ZM11 3.99976V4.99976H5V3.99976C5 2.3429 6.34315 0.999756 8 0.999756C9.65685 0.999756 11 2.3429 11 3.99976ZM2 5.99976V14.9998H14V5.99976H2ZM9 10.4995C9 11.0518 8.55228 11.4995 8 11.4995C7.44772 11.4995 7 11.0518 7 10.4995C7 9.94723 7.44772 9.49951 8 9.49951C8.55228 9.49951 9 9.94723 9 10.4995Z"
+        fill="currentColor"
+      ></path>
+    </svg>
+  );
+}
+
+
+
+export function DeleteIcon() {
+  return (
+    <svg
+      style={{cursor: 'pointer'}}
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      className=""
+      role="img"
+      aria-hidden="true"
+      aria-labelledby=""
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M6.83341 -0.000488281L6.47986 0.145958L5.14653 1.47929L5.00008 1.83284V3H0.5H0V4H0.5H2.00002L2.00008 15.4995L2.50008 15.9995H13.5001L14.0001 15.4995L14 4H15.5H16V3H15.5H11.0001V1.83284L10.8536 1.47929L9.5203 0.145958L9.16675 -0.000488281H6.83341ZM10.0001 3V2.03995L8.95964 0.999512H7.04052L6.00008 2.03995V3H10.0001ZM5.00008 4H3.00002L3.00008 14.9995H13.0001L13 4H11.0001H10.0001H6.00008H5.00008ZM7 7V7.5V11.5V12H6V11.5V7.5V7H7ZM10 7.5V7H9V7.5V11.5V12H10V11.5V7.5Z"
+        fill="currentColor"
+      ></path>
+    </svg>
+  );
+}
+
+
+
+export const AnalyticalIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      className=""
+      role="img"
+      aria-hidden="true"
+      aria-labelledby=""
+    >
+      <path
+        clipRule="evenodd"
+        d="m11 1-1 1v2h-4l-1 1v2h-4l-1 1v6l1 1h4l.5-.5.5.5h4l.5-.5.5.5h4l1-1v-12l-1-1zm0 13h1 2 1v-1-10-1h-1-2-1v1 2 8zm-1-9h-1-2-1v1 2 5 1h1 2 1v-1-7zm-6 3h1v1 4 1h-1-2-1v-1-4-1h1"
+        fill="currentColor"
+        fillRule="evenodd"
+      ></path>
+    </svg>
+  );
+}
+
