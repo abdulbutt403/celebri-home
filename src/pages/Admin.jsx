@@ -52,6 +52,10 @@ const linkButton = {
   borderRadius: 4,
   marginBottom: 12,
   transition: "transform 0.15s cubic-bezier(0, 0.2, 0.5, 3) 0s",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: 7,
 };
 
 export default function Admin() {
@@ -148,6 +152,21 @@ export default function Admin() {
                         className="link-bt"
                         onClick={() => window.open(link.href)}
                       >
+                        {link.icon && (
+                          <div
+                            style={{
+                              width: 28,
+                              height: 28,
+                              overflow: "hidden",
+                            }}
+                          >
+                            <img
+                              className="button-image"
+                              src={`${baseUrl}/uploads/${link.icon}`}
+                              alt={link.title}
+                            />
+                          </div>
+                        )}
                         {link.title || "No Title added"}
                       </button>
                     ))}
@@ -168,7 +187,10 @@ export default function Admin() {
             {!buttonPressed ? (
               <AddLinkButton setButtonPressed={setButtonPressed} />
             ) : (
-              <AddLinkPanel setButtonPressed={setButtonPressed} fetchUser={fetchUser} />
+              <AddLinkPanel
+                setButtonPressed={setButtonPressed}
+                fetchUser={fetchUser}
+              />
             )}
 
             <div
@@ -209,10 +231,9 @@ const LiveUrl = () => {
       window.location.href = "/login";
     }, 1000);
   }
-  const {userData} = token ? jwtDecode(token) : {};
+  const { userData } = token ? jwtDecode(token) : {};
 
-  const profilePath = `${window.location.origin}/user/${userData._id}`
-
+  const profilePath = `${window.location.origin}/user/${userData._id}`;
 
   return (
     <div
@@ -230,20 +251,22 @@ const LiveUrl = () => {
               Your CelebriLinks is live:{" "}
               <span
                 className="underline max-w-[200px] truncate inline-block align-bottom"
-                style={{ fontWeight: 300 , cursor: 'pointer'}}
+                style={{ fontWeight: 300, cursor: "pointer" }}
                 onClick={() => window.open(profilePath)}
               >
-                    {profilePath}
+                {profilePath}
               </span>
             </p>
-
           </div>
           <button
             className="relative transition duration-75 ease-out w-full h-2xl px-md rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-black antialiased text-black hidden md:block max-w-min whitespace-nowrap mt-2 md:mt-0 bg-white border border-sand hover:bg-chalk hover:border-chalk active:bg-chalk active:border-chalk"
             type="button"
             style={{ padding: 8, borderRadius: 9999 }}
           >
-            <span className="flex items-center justify-center block font-semibold text-md" onClick={() => copyToClipboard(profilePath)}>
+            <span
+              className="flex items-center justify-center block font-semibold text-md"
+              onClick={() => copyToClipboard(profilePath)}
+            >
               Copy URL
             </span>
           </button>
@@ -396,7 +419,7 @@ const AddLinkPanel = ({ setButtonPressed, fetchUser }) => {
                 </div>
               </div>
             </div>
-            <LinkInput fetchUser={fetchUser}/>
+            <LinkInput fetchUser={fetchUser} />
             <hr
               style={{ height: 10, marginTop: 40 }}
               classname="my-7 bg-sand w-full"
@@ -477,7 +500,7 @@ const AddLinkPanel = ({ setButtonPressed, fetchUser }) => {
   );
 };
 
-const LinkInput = ({fetchUser}) => {
+const LinkInput = ({ fetchUser }) => {
   const [url, setUrl] = useState("");
   const [Loading, setLoading] = useState(false);
 
@@ -548,7 +571,7 @@ const LinkInput = ({fetchUser}) => {
           title: "",
           href: url,
         });
-        fetchUser()
+        fetchUser();
         toast.success("Link added successfully");
         setLoading(false);
         setUrl(""); // Clear the input field

@@ -16,6 +16,7 @@ import jwtDecode from "jwt-decode";
 import { baseUrl } from "../constants";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Tippy from "@tippy.js/react";
 
 export default function LinkEditor({
   titleProp,
@@ -26,6 +27,32 @@ export default function LinkEditor({
 }) {
   const [title, setTitle] = useState(titleProp);
   const [url, setUrl] = useState(urlProp);
+  const [choosed, setChoosed] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(iconProp ? `${baseUrl}/uploads/${iconProp}` : null);
+  const [selection, setSelection] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+
+
+    // Check if a file is selected and it is a PNG file
+    if (file && file.type === "image/png") {
+      setChoosed(true)
+      setSelection(file);
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        // Set the selected image and update the state
+        setSelectedImage(e.target.result);
+      };
+
+      reader.readAsDataURL(file);
+    } else {
+      // Clear the selected image if the file is not a PNG
+      setSelectedImage(null);
+      alert("Please select a valid PNG image.");
+    }
+  };
 
   const token = localStorage.getItem("token");
 
@@ -58,20 +85,32 @@ export default function LinkEditor({
 
   const handleUpdateLink = async () => {
     try {
+      const formData = new FormData();
+      formData.append("href", url);
+      formData.append("title", title);
+
+      // Check if selectedImage is a valid File object
+      if (selection instanceof File) {
+        formData.append("icon", selection);
+      }
+      else{
+        formData.append("noIcon", true);
+      }
+
       const response = await axios.post(
         `${baseUrl}/users/${userId}/links/${idProp}`,
+        formData,
         {
-          icon: iconProp,
-          href: url,
-          title,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
 
-      console.log(response)
+      console.log(response);
 
-      setEditTitle(false)
-      setEditTitle(false)
-
+      setEditTitle(false);
+      setEditTitle(false);
 
       fetchData();
 
@@ -86,6 +125,15 @@ export default function LinkEditor({
       <div className="flex items-center justify-center border-[#d7dce1] w-8 h-auto">
         <MoveIcon />
       </div>
+      {selectedImage && (
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <img
+            src={selectedImage}
+            alt="Selected"
+            style={{ width: "60px" , objectFit: 'cover'}}
+          />
+        </div>
+      )}
       <div className="flex-1 p-lg h-full relative">
         <form className="sc-dFJsGO sc-bsipQr fXfbKj fbzSf">
           <div className="w-full pr-3">
@@ -182,14 +230,6 @@ export default function LinkEditor({
               </div>
             </div>
           </div>
-          <div
-            title="Uplaod an icon"
-            style={{ opacity: 0.6, cursor: "pointer" }}
-          >
-            <button type={`button`} style={{ fontSize: 14 }}>
-              Uplaod icon
-            </button>
-          </div>
         </form>
         <div
           style={{
@@ -200,19 +240,69 @@ export default function LinkEditor({
           }}
         >
           <div style={{ display: "flex", gap: 20, marginTop: 20 }}>
-            <CustomIcon3 />
+            {(!selectedImage) && (
+              <Tippy content={<span>Attach Icon</span>}>
+                <button
+                  type="button"
+                  style={{ ...btn, position: "relative" }}
+                  onClick={() => {}}
+                >
+                  <input
+                    type="file"
+                    style={{
+                      position: "absolute",
+                      width: "100%",
+                      left: 0,
+                      opacity: "0",
+                    }}
+                    accept=".png" // Allow only PNG files
+                    onChange={handleFileChange}
+                  />
+                  <CustomIcon3 />
+                </button>
+              </Tippy>
+            )}
+            {selectedImage && (
+              <Tippy content={<span>Remove Icon</span>}>
+                <button
+                  type="button"
+                  style={{ ...btn, position: "relative" }}
+                  onClick={() => setSelectedImage(null)}
+                >
+                  <i
+                    className="fa fa-times"
+                    style={{
+                      fontSize: 24,
+                      fontWeight: "300",
+                      color: "red",
+                      transform: "translateY(-5px)",
+                    }}
+                  />
+                </button>
+              </Tippy>
+            )}
             <StarIcon />
             <SimpleIcon />
             <LockIcon />
             <AnalyticalIcon />
           </div>
           <div style={buttons}>
-            <button type="button" style={btn1} onClick={handleDeleteLink}>
-              Delete <DeleteIcon />
-            </button>
-            <button type="button" style={btn2} onClick={handleUpdateLink}>
-              Update <CustomIcon2 />
-            </button>
+            <Tippy content={<span>Delete</span>}>
+              <button type="button" style={btn} onClick={handleDeleteLink}>
+                <DeleteIcon />
+              </button>
+            </Tippy>
+
+            <Tippy content={<span>Update</span>}>
+              <button
+                type="button"
+                title="Update"
+                style={btn}
+                onClick={handleUpdateLink}
+              >
+                <CustomIcon2 />
+              </button>
+            </Tippy>
           </div>
         </div>
       </div>
@@ -222,29 +312,14 @@ export default function LinkEditor({
 
 const buttons = {
   display: "flex",
-  gap: 4,
+  gap: 10,
+  transform: "translateY(10px)",
   cursor: "pointer",
   alignItems: "center",
 };
 
-const btn1 = {
-  display: "flex",
-  gap: 4,
+const btn = {
+  border: "none",
+  outline: "none",
   cursor: "pointer",
-  alignItems: "center",
-  border: "2px solid red",
-  padding: "2px 6px",
-  borderRadius: 5,
-  boxShadow: "0 0 3px 0 rgba(0,0,0,0.8)",
-};
-
-const btn2 = {
-  display: "flex",
-  gap: 4,
-  cursor: "pointer",
-  alignItems: "center",
-  border: "2px solid green",
-  padding: "2px 6px",
-  borderRadius: 5,
-  boxShadow: "0 0 3px 0 rgba(0,0,0,0.8)",
 };

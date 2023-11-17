@@ -53,6 +53,10 @@ const linkButton = {
   borderRadius: 4,
   marginBottom: 12,
   transition: "transform 0.15s cubic-bezier(0, 0.2, 0.5, 3) 0s",
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: 7
 };
 
 export default function ShareProfile() {
@@ -128,16 +132,31 @@ export default function ShareProfile() {
                   </h5>
                 </div>
                 <div style={linksContainer}>
-                  {userLinks.map((link) => (
-                    <button
-                      key={link._id}
-                      style={linkButton}
-                      className="link-bt"
-                      onClick={() => window.open(link.href)}
-                    >
-                      {link.title || "No Title added"}
-                    </button>
-                  ))}
+                {userLinks.map((link) => (
+                      <button
+                        key={link._id}
+                        style={linkButton}
+                        className="link-bt"
+                        onClick={() => window.open(link.href)}
+                      >
+                        {link.icon && (
+                         <div
+                         style={{
+                           width: 28,
+                           height: 28,
+                           overflow: "hidden",
+                         }}
+                       >
+                         <img
+                           className="button-image"
+                           src={`${baseUrl}/uploads/${link.icon}`}
+                           alt={link.title}
+                         />
+                       </div>
+                        )}
+                        {link.title || "No Title added"}
+                      </button>
+                    ))}
                 </div>
               </div>
             </ReactDevicePreview>

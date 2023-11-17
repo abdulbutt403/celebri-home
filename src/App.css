@@ -2686,3 +2686,9 @@ label.active-input {
 .p-lg{
   padding: 1.5rem
 }
+
+.button-image{
+ min-width: 100%;
+  overflow: hidden;
+  object-fit: cover;
+}
