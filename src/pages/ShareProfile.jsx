@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { baseUrl } from "../constants";
 import jwtDecode from "jwt-decode";
 import toast, { LoaderIcon } from "react-hot-toast";
-import LinkEditor from "../components/LinkEditor";
+import { HexColorPicker } from "react-colorful";
 import { copyToClipboard } from "../utils";
 import { useParams } from "react-router-dom";
 
@@ -45,24 +45,20 @@ const linksContainer = {
   marginTop: 30,
 };
 
-const linkButton = {
-  background: "#fff",
+const {...linkButton} = {
   width: "80%",
   height: 60,
   boxShadow: "rgba(10, 11, 13, 0.2) 0px 2px 4px 0px",
   borderRadius: 4,
   marginBottom: 12,
   transition: "transform 0.15s cubic-bezier(0, 0.2, 0.5, 3) 0s",
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  gap: 7
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: 7,
 };
 
 export default function ShareProfile() {
-  const [buttonPressed, setButtonPressed] = useState(false);
-  const isMobile = useResponsive();
-
   const params = useParams();
 
   console.log(params);
@@ -73,7 +69,18 @@ export default function ShareProfile() {
 
   useEffect(() => {
     fetchUser();
+    updateProfileViews();
   }, []);
+
+  const updateProfileViews = async () => {
+    try {
+      const userId = params.id;
+      // Make a request to the server to update profile views
+      await axios.post(`${baseUrl}/users/${userId}/update-views`);
+    } catch (error) {
+      console.error("Error updating profile views", error);
+    }
+  };
 
   const fetchUser = async () => {
     try {
@@ -95,6 +102,17 @@ export default function ShareProfile() {
     }
   };
 
+
+  const handleLinkClick = async (linkId) => {
+    try {
+      const userId = params.id;
+      // Make a request to the server to update link clicks
+      await axios.post(`${baseUrl}/users/${userId}/update-link-clicks/${linkId}`);
+    } catch (error) {
+      console.error('Error updating link clicks', error);
+    }
+  };
+
   return (
     <div className="admin-panel">
       <main>
@@ -107,7 +125,7 @@ export default function ShareProfile() {
             justifyContent: "center",
           }}
         >
-          <div style={{transform: 'translate(88px, 200px)'}}>
+          <div style={{ transform: "translate(88px, 200px)" }}>
             <ReactDevicePreview device="galaxynote8" scale="0.6">
               <div
                 style={{
@@ -132,31 +150,34 @@ export default function ShareProfile() {
                   </h5>
                 </div>
                 <div style={linksContainer}>
-                {userLinks.map((link) => (
-                      <button
-                        key={link._id}
-                        style={linkButton}
-                        className="link-bt"
-                        onClick={() => window.open(link.href)}
-                      >
-                        {link.icon && (
-                         <div
-                         style={{
-                           width: 28,
-                           height: 28,
-                           overflow: "hidden",
-                         }}
-                       >
-                         <img
-                           className="button-image"
-                           src={`${baseUrl}/uploads/${link.icon}`}
-                           alt={link.title}
-                         />
-                       </div>
-                        )}
-                        {link.title || "No Title added"}
-                      </button>
-                    ))}
+                  {userLinks.map((link) => (
+                    <button
+                      key={link._id}
+                      style={{...linkButton, background: link.background }}
+                      className="link-bt"
+                      onClick={() => {
+                        handleLinkClick(link._id);
+                        window.open(link.href);
+                      }}
+                    >
+                      {link.icon && (
+                        <div
+                          style={{
+                            width: 28,
+                            height: 28,
+                            overflow: "hidden",
+                          }}
+                        >
+                          <img
+                            className="button-image"
+                            src={`${baseUrl}/uploads/${link.icon}`}
+                            alt={link.title}
+                          />
+                        </div>
+                      )}
+                      {link.title || "No Title added"}
+                    </button>
+                  ))}
                 </div>
               </div>
             </ReactDevicePreview>

@@ -1,10 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import AdminHeader from "../components/Admin/Header";
 import useResponsive from "../Hooks/responsive";
 import { DatePickIcon, TryFreeIcon, WhatIcon } from "../svgs";
+import axios from "axios";
+import { baseUrl } from "../constants";
+import jwtDecode from "jwt-decode";
+import { LoaderIcon } from "react-hot-toast";
 
 export default function Analytics() {
-  const isMobile = useResponsive();
+  const token = localStorage.getItem("token");
+
+  const [user, setUser] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
+  if (!token) {
+    window.location.href = "/login";
+  }
+
+  const userData = token ? jwtDecode(token) : {};
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const fetchUser = async () => {
+    try {
+      setIsLoading(true);
+      const userId = userData._id;
+      const response = await axios.get(`${baseUrl}/users/${userId}`);
+
+      // Set the user data in the state
+      const user = response.data.user;
+
+      setUser(user);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+      // Handle errors appropriately
+    }
+  };
+
   return (
     <div className="admin-panel">
       <AdminHeader />
@@ -14,7 +49,7 @@ export default function Analytics() {
             paddingTop: 80,
           }}
         >
-          <LifetimeAnalytics />
+          <LifetimeAnalytics user={user} isLoading={isLoading} />
           <div
             style={{
               width: 640,
@@ -28,7 +63,9 @@ export default function Analytics() {
             <DateRangePicker />
             <Banner />
             <Activity />
-            <Performance />
+            {user && user.links && user.links.length && (
+              <Performance links={user.links} />
+            )}
           </div>
         </div>
       </main>
@@ -36,7 +73,7 @@ export default function Analytics() {
   );
 }
 
-const LifetimeAnalytics = () => {
+const LifetimeAnalytics = ({ user, isLoading }) => {
   return (
     <div
       data-static-el-id="lifetime-analytics"
@@ -49,17 +86,42 @@ const LifetimeAnalytics = () => {
         Lifetime Analytics
       </p>
       <div className=" sc-JAcuL diyeLd analytic-grid">
-        <AnalyticsBox title="Views" count="4" color={"rgb(0, 215, 117)"} />
-        <AnalyticsBox title="Clicks" count="N/A" color={"rgb(124, 65, 255)"} />
-        <AnalyticsBox title="CTR" count="N/A" color={"rgb(0, 182, 255)"} />
-        <AnalyticsBox title="Revenue" count="-" color={"rgb(255, 124, 234)"} />
-        <AnalyticsBox title="Subscribers" count="0" color={"orange"} />
+        <AnalyticsBox
+          isLoading={isLoading}
+          title="Views"
+          count={user.views ? user.views : 0}
+          color={"rgb(0, 215, 117)"}
+        />
+        <AnalyticsBox
+          isLoading={isLoading}
+          title="Clicks"
+          count={user.clicks ? user.clicks : 0}
+          color={"rgb(124, 65, 255)"}
+        />
+        <AnalyticsBox
+          isLoading={isLoading}
+          title="CTR"
+          count={user.clicks && user.views ? `${((user.clicks / user.views) * 100).toFixed(2)} %` : 'N/A'}
+          color={"rgb(0, 182, 255)"}
+        />
+        <AnalyticsBox
+          isLoading={isLoading}
+          title="Revenue"
+          count="-"
+          color={"rgb(255, 124, 234)"}
+        />
+        <AnalyticsBox
+          isLoading={isLoading}
+          title="Subscribers"
+          count="0"
+          color={"orange"}
+        />
       </div>
     </div>
   );
 };
 
-const AnalyticsBox = ({ title, count, color }) => {
+const AnalyticsBox = ({ isLoading, title, count, color }) => {
   return (
     <div className="iXxaGy fFGAIg analytic-box">
       <div className="iXxaGy fFGAIg analytic-title">
@@ -71,19 +133,40 @@ const AnalyticsBox = ({ title, count, color }) => {
         </p>
       </div>
 
-      <p className=" analytic-count-text analytic-count">{count}</p>
+      <p className=" analytic-count-text analytic-count">
+        {isLoading ? (
+          <div style={{ padding: 4 }}>
+            <LoaderIcon />
+          </div>
+        ) : (
+          count
+        )}
+      </p> 
     </div>
   );
 };
 
 const DateRangePicker = () => {
+  // Create a ref for the input element
+  const inputRef = useRef(null);
+
+  // Handle the click on the date-pick-wrap div
+  const handleDatePickWrapClick = (event) => {
+    event.stopPropagation();
+    if (inputRef.current) {
+      inputRef.current.click();
+    }
+  };
+
   return (
     <div
       data-static-el-id="analytics-date-range-picker"
       className="date-pick-wrap"
+      onClick={handleDatePickWrapClick}
     >
       <DatePickIcon />
-      <input className="date-input" type="date" />
+      {/* Attach the ref to the input element */}
+      <input ref={inputRef} className="date-input" type="date" />
     </div>
   );
 };
@@ -319,7 +402,7 @@ const Activity = () => {
   );
 };
 
-const Performance = () => {
+const Performance = ({ links }) => {
   return (
     <div
       style={{
@@ -337,25 +420,23 @@ const Performance = () => {
         </h2>
         <WhatIcon />
       </div>
-      <div className="sc-fodVxV sc-fFubgz gndtOw bjNVbG sc-fodVxV gndtOw empty">
-       <LinkBox title={'Tour Schedule'} count={'3,141'}/>
-       <LinkBox title={'Tour Schedule'} count={'3,141'}/>
-       <LinkBox title={'Tour Schedule'} count={'3,141'}/>
-       <LinkBox title={'Tour Schedule'} count={'3,141'}/>
-       <LinkBox title={'Tour Schedule'} count={'3,141'}/>
+      <div className="sc-fodVxV sc-fFubgz gndtOw bjNVbG sc-fodVxV gndtOw empty" style={{justifyContent:'start', padding: '12px 15px'}}>
+      <p style={{textAlign: 'right', color: 'gray', width: '100%'}}>clicks</p>
+        {links.map((x, i) => (
+          <LinkBox key={i} title={x.title} count={x.click || 0} />
+        ))}
       </div>
     </div>
   );
 };
 
-
-const LinkBox = ({title, count}) => {
-    return(
-        <div class="sc-ljRboo sc-jmhFOf performance-txt fFGAIg">
-        <p class="sc-httYMd sc-kiYtDG dXXfip performance-txt-2">{title}</p>
-        <p class="sc-httYMd sc-kiYtDG sc-cKZHah jrzUKj performance-txt-2 f-600">
-          {count}
-        </p>
-      </div>
-    )
-}
+const LinkBox = ({ title, count }) => {
+  return (
+    <div class="sc-ljRboo sc-jmhFOf performance-txt fFGAIg">
+      <p style={{fontSize: 14, fontWeight: '500'}} >{title}</p>
+      <p class="sc-httYMd sc-kiYtDG sc-cKZHah jrzUKj performance-txt-2 f-600">
+        {count} 
+      </p>
+    </div>
+  );
+};

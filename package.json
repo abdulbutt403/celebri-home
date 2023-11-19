@@ -10,6 +10,7 @@
     "axios": "^1.5.1",
     "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
+    "react-colorful": "^5.6.1",
     "react-device-preview": "^1.0.6",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",

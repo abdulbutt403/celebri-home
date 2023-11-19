@@ -17,6 +17,7 @@ import { baseUrl } from "../constants";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Tippy from "@tippy.js/react";
+import { HexColorPicker } from "react-colorful";
 
 export default function LinkEditor({
   titleProp,
@@ -24,20 +25,24 @@ export default function LinkEditor({
   iconProp,
   idProp,
   fetchData,
+  backgroundProp,
 }) {
   const [title, setTitle] = useState(titleProp);
   const [url, setUrl] = useState(urlProp);
   const [choosed, setChoosed] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(iconProp ? `${baseUrl}/uploads/${iconProp}` : null);
+  const [removed, setRemoved] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(
+    iconProp ? `${baseUrl}/uploads/${iconProp}` : null
+  );
   const [selection, setSelection] = useState(null);
+
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
 
-
     // Check if a file is selected and it is a PNG file
     if (file && file.type === "image/png") {
-      setChoosed(true)
+      setChoosed(true);
       setSelection(file);
       const reader = new FileReader();
 
@@ -83,17 +88,21 @@ export default function LinkEditor({
     }
   };
 
+  const [color, setColor] = useState(backgroundProp);
+  const [show, setShow] = useState(false);
+
   const handleUpdateLink = async () => {
     try {
       const formData = new FormData();
       formData.append("href", url);
       formData.append("title", title);
+      formData.append("background", color);
 
       // Check if selectedImage is a valid File object
       if (selection instanceof File) {
         formData.append("icon", selection);
-      }
-      else{
+      } else {
+        if(removed)
         formData.append("noIcon", true);
       }
 
@@ -130,7 +139,7 @@ export default function LinkEditor({
           <img
             src={selectedImage}
             alt="Selected"
-            style={{ width: "60px" , objectFit: 'cover'}}
+            style={{ width: "60px", objectFit: "cover" }}
           />
         </div>
       )}
@@ -139,8 +148,10 @@ export default function LinkEditor({
           <div className="w-full pr-3">
             <div>
               <div className="grid mb-1 w-full grid-cols-[minmax(0,_90%)] items-baseline">
+            
                 {editTitle && (
                   <div className="row-start-1 col-start-1 flex">
+                      <div style={{height: 10, width: 10, border: '1px solid black', background: color}}></div>
                     <input
                       type="text"
                       className="w-full h-5 text-sm border-none p-0 m-0 outline-none  font-semibold "
@@ -162,6 +173,7 @@ export default function LinkEditor({
                 )}
                 {!editTitle && (
                   <div className="row-start-1 col-start-1 inline-flex">
+                      <div style={{height: 13, width: 13, border: '1px solid rgba(0,0,0,0.5)', marginRight: 10,transform: 'translateY(3.8px)',  background: color}}></div>
                     <button
                       type="button"
                       className="flex items-center max-w-full rounded-[2px] outline-offset-2 outline-2 focus-visible:outline"
@@ -237,15 +249,16 @@ export default function LinkEditor({
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            position: "relative",
           }}
         >
           <div style={{ display: "flex", gap: 20, marginTop: 20 }}>
-            {(!selectedImage) && (
+            {!selectedImage && (
               <Tippy content={<span>Attach Icon</span>}>
                 <button
                   type="button"
-                  style={{ ...btn, position: "relative" }}
-                  onClick={() => {}}
+                  style={{ ...btn, position: "relative", transform: 'translateY(-5px)' }}
+            
                 >
                   <input
                     type="file"
@@ -254,11 +267,12 @@ export default function LinkEditor({
                       width: "100%",
                       left: 0,
                       opacity: "0",
+                      
                     }}
                     accept=".png" // Allow only PNG files
                     onChange={handleFileChange}
                   />
-                  <CustomIcon3 />
+                  <CustomIcon3/>
                 </button>
               </Tippy>
             )}
@@ -267,7 +281,11 @@ export default function LinkEditor({
                 <button
                   type="button"
                   style={{ ...btn, position: "relative" }}
-                  onClick={() => setSelectedImage(null)}
+                  onClick={() => {
+                    setSelectedImage(null);
+                    setSelection(null);
+                    setRemoved(true)
+                  }}
                 >
                   <i
                     className="fa fa-times"
@@ -281,6 +299,25 @@ export default function LinkEditor({
                 </button>
               </Tippy>
             )}
+
+            <Tippy content={<span>Pick Color</span>}>
+              <button
+                type="button"
+                style={{ ...btn, position: "relative" }}
+                onClick={() => setShow((x) => !x)}
+              >
+                <i
+                  className="fa fa-tint"
+                  style={{
+                    fontSize: 22,
+                    fontWeight: "300",
+                    color: "gray",
+                    transform: "translateY(-2px)",
+                  }}
+                />
+              </button>
+            </Tippy>
+
             <StarIcon />
             <SimpleIcon />
             <LockIcon />
@@ -305,6 +342,11 @@ export default function LinkEditor({
             </Tippy>
           </div>
         </div>
+        {show && (
+          <div style={{ position: "absolute", left: 60 }}>
+            <HexColorPicker color={color} onChange={setColor} />
+          </div>
+        )}
       </div>
     </div>
   );

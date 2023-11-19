@@ -44,8 +44,7 @@ const linksContainer = {
   marginTop: 30,
 };
 
-const linkButton = {
-  background: "#fff",
+const {...linkButton} = {
   width: "80%",
   height: 60,
   boxShadow: "rgba(10, 11, 13, 0.2) 0px 2px 4px 0px",
@@ -148,7 +147,7 @@ export default function Admin() {
                     {userLinks.map((link) => (
                       <button
                         key={link._id}
-                        style={linkButton}
+                        style={{...linkButton, background: link.background}}
                         className="link-bt"
                         onClick={() => window.open(link.href)}
                       >
@@ -209,6 +208,7 @@ export default function Admin() {
                   urlProp={link.href}
                   iconProp={link.icon}
                   idProp={link._id}
+                  backgroundProp={link.background}
                   fetchData={fetchUser}
                 />
               ))}
