@@ -113,12 +113,11 @@ const HalfInput = () => {
 };
 
 const Link = ({ text, path }) => {
-  const navigate = useNavigate();
   return (
     <a
       className="gQHsyf lom"
       style={{ cursor: "pointer" }}
-      onClick={() => navigate(path)}
+      onClick={() => (window.location.href = path)}
     >
       <p className="cpeqoh">{text}</p>
     </a>
