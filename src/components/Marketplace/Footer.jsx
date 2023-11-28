@@ -48,7 +48,7 @@ export default function Footer() {
     
 
       <div className="links-wrap">
-        <div class="bTRgKr flex">
+        <div className="bTRgKr flex">
           <Nav text={"Company"} array={companyLinks} />
           <Nav text={"Community"} array={communityLinks} />
           <Nav text={"Support"} array={supportLinks} />
@@ -98,20 +98,20 @@ const HalfInput = () => {
 
 const Link = ({ text }) => {
   return (
-    <a class="gQHsyf">
-      <p class="cpeqoh">{text}</p>
+    <a className="gQHsyf">
+      <p className="cpeqoh">{text}</p>
     </a>
   );
 };
 
 const Nav = ({ text, array }) => {
   return (
-    <div class="wrNff">
-      <div class="kLEIyT">
+    <div className="wrNff">
+      <div className="kLEIyT">
         {text === "trust" ? (
-          <h4 class="dubjts">Trust &amp; Legal</h4>
+          <h4 className="dubjts">Trust &amp; Legal</h4>
         ) : (
-          <h4 class="dubjts">{text}</h4>
+          <h4 className="dubjts">{text}</h4>
         )}
       </div>
       <nav>
@@ -160,7 +160,7 @@ const SocialMediaIcons = () => {
 
 const BigLogo = () => {
   return (
-    <div class="kcskEf box" style={{ height: 200, display: 'flex', justifyContent: 'center' }}>
+    <div className="kcskEf box" style={{ height: 200, display: 'flex', justifyContent: 'center' }}>
 
         <img src="big-white.png" style={{ maxWidth: "80%" }} />
       

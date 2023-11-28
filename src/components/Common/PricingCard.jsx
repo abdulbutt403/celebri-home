@@ -52,7 +52,7 @@ export default function PricingCard({ tag, price, btnText, extraTag, badge }) {
 
 const ProLine = () => {
   return (
-    <div class="jscLyN">
+    <div className="jscLyN">
       <svg
         width="16"
         height="14"
@@ -67,7 +67,7 @@ const ProLine = () => {
           fill="#70764D"
         ></path>
       </svg>
-      <p class="isHaNx">
+      <p className="isHaNx">
         Pro users get more visitors
       </p>
     </div>

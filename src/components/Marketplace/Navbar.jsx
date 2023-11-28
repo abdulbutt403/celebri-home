@@ -1,12 +1,14 @@
 import React from "react";
 import useResponsive from "../../Hooks/responsive";
 import { Logo } from "../../svgs";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar({ browse }) {
   const isMobile = useResponsive();
+  const navigate = useNavigate()
   return (
     <div className="nav-box-wrap">
-      <div class="nav-box" style={{ zIndex: 2 }}>
+      <div className="nav-box" style={{ zIndex: 2 }}>
         <div className="list-left">
           <Logo />
 
@@ -34,6 +36,7 @@ export default function Navbar({ browse }) {
           {!isMobile && (
             <>
               <div
+    onClick={() => navigate('/browse')}
                 style={
                   browse
                     ? {
@@ -50,6 +53,7 @@ export default function Navbar({ browse }) {
                 Browse
               </div>
               <div
+              onClick={() => navigate('/marketplace')}
                 style={
                   !browse
                     ? {
@@ -87,8 +91,8 @@ const LoginButton = () => {
 
 const SignupButton = () => {
   return (
-    <div class="signup-btn">
-      <span class="signup-text">Sign up free</span>
+    <div className="signup-btn">
+      <span className="signup-text">Sign up free</span>
     </div>
   );
 };

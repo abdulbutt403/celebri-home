@@ -2692,3 +2692,20 @@ label.active-input {
   overflow: hidden;
   object-fit: cover;
 }
+
+.lom:hover{
+  transform: scale(1.01);
+  color: #000;
+}
+
+.nav-limst > div{
+  font-family: "Link Sans", "Arial Black", Arial, sans-serif;
+  font-size: clamp(26px, 7.5vmin, 68px);
+  border-bottom: 1px solid pink;
+  padding-bottom: 20px;
+  padding-top: 10px;
+}
+
+.nav-limst > div:hover{
+  transform: scale(1.03);
+}

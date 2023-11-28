@@ -5,14 +5,14 @@ import Card from "./Common/Card";
 export default function Plans() {
   const isMobile = useResponsive();
   return (
-    <div class="plans-wrap">
-      <h2 class="plans-text">
+    <div className="plans-wrap">
+      <h2 className="plans-text">
         The fast, friendly and powerful link in bio tool.
       </h2>
 
-      <div class={!isMobile ? "mt-48" : ""} style={!isMobile ? {marginBottom: 60}:{marginBottom: 60, marginTop: 20} }>
-        <div class="plans-btn iRpCZj">
-          <span class="plans-btn-text">Explore all plans</span>
+      <div className={!isMobile ? "mt-48" : ""} style={!isMobile ? {marginBottom: 60}:{marginBottom: 60, marginTop: 20} }>
+        <div className="plans-btn iRpCZj">
+          <span className="plans-btn-text">Explore all plans</span>
         </div>
       </div>
 

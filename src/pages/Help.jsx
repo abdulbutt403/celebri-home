@@ -49,35 +49,35 @@ const HelpHeader = () => {
                 </a>
               </div>
             </div>
-            <div class="jsx-73269029ea53bf4f">
-              <div class="jsx-73269029ea53bf4f flex items-center font-semibold">
+            <div className="jsx-73269029ea53bf4f">
+              <div className="jsx-73269029ea53bf4f flex items-center font-semibold">
                 <nav
-                  class="hidden items-center md:flex"
+                  className="hidden items-center md:flex"
                   data-testid="large-screen-children"
                 >
                   <a
                     target="_blank"
                     rel="noopener noreferrer"
                     href="https://linktr.ee/"
-                    class="mx-5 mb-5 text-md no-underline hover:opacity-80 md:mx-3 md:my-0 md:text-base"
+                    className="mx-5 mb-5 text-md no-underline hover:opacity-80 md:mx-3 md:my-0 md:text-base"
                     data-testid="header-link-default"
                   >
                     <span>Go to CelebriLinks</span>
                   </a>
-                  <div class="relative cursor-pointer">
-                    <select class="peer absolute z-10 block h-6 w-full cursor-pointer opacity-0 md:text-base">
-                      <option value="/en/" class="text-black" selected="">
+                  <div className="relative cursor-pointer">
+                    <select className="peer absolute z-10 block h-6 w-full cursor-pointer opacity-0 md:text-base">
+                      <option value="/en/" className="text-black" selected="">
                         English
                       </option>
-                      <option value="/id/" class="text-black">
+                      <option value="/id/" className="text-black">
                         Bahasa Indonesia
                       </option>
-                      <option value="/pt/" class="text-black">
+                      <option value="/pt/" className="text-black">
                         Português
                       </option>
                       ;
                     </select>
-                    <div class="mb-10 ml-5 flex items-center gap-1 text-md hover:opacity-80 peer-hover:opacity-80 md:m-0 md:ml-3 md:text-base">
+                    <div className="mb-10 ml-5 flex items-center gap-1 text-md hover:opacity-80 peer-hover:opacity-80 md:m-0 md:ml-3 md:text-base">
                       <Globe />
                       English
                       <ArrowDown />
@@ -102,8 +102,8 @@ const HelpHeader = () => {
 
 const Form = () => {
   return (
-    <form action="/en/" autocomplete="off" class="">
-      <div class="relative flex">
+    <form action="/en/" autocomplete="off" className="">
+      <div className="relative flex">
         <input
           type="text"
           autocomplete="off"
@@ -111,7 +111,7 @@ const Form = () => {
           placeholder="Search for articles..."
           name="q"
         />
-        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center fill-header-color pl-4 peer-focus-visible:fill-black-45">
+        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center fill-header-color pl-4 peer-focus-visible:fill-black-45">
           <WhiteSearch />
         </div>
       </div>

@@ -56,9 +56,9 @@ const Feed = () => {
       </a>
 
       <Information />
-      <div class="submit2">
+      <div className="submit2">
         <input
-          class="button purple large"
+          className="button purple large"
           data-user-edit-submit=""
           type="button"
           value="Save details"
@@ -106,11 +106,11 @@ const Information = () => {
   const [active, setActive] = useState(false);
   return (
     <div className="sc-eGCarw zAeKe" style={{ padding: 20 }}>
-      <div class="billing-name">
-        <label class="active-input" for="name">
+      <div className="billing-name">
+        <label className="active-input" for="name">
           <input
             type="text"
-            class="fields"
+            className="fields"
             placeholder="John Doe"
             data-name=""
           />
@@ -120,11 +120,11 @@ const Information = () => {
         <div data-active-input-error="" data-name-errors=""></div>
       </div>
       <br />
-      <div class="billing-name">
-        <label class="active-input" for="name">
+      <div className="billing-name">
+        <label className="active-input" for="name">
           <input
             type="email"
-            class="fields"
+            className="fields"
             placeholder="John@Doe.com"
             data-name=""
           />
@@ -142,7 +142,7 @@ const Security = () => {
   const [active, setActive] = useState(false);
   return (
     <div className="sc-eGCarw zAeKe" style={{ maxHeight: isMobile? 110: 90 }}>
-      <span class="sc-GTWni gyOhIp">Multi-factor authentication</span>
+      <span className="sc-GTWni gyOhIp">Multi-factor authentication</span>
       <p
         className="text-concrete text-md mt-2"
         style={{ transform: "translateY(-8px)" }}

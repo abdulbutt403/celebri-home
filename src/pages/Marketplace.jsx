@@ -21,7 +21,7 @@ const Featured = () => {
   const isMobile = useResponsive();
   return (
     <>
-      <h2 class="Text__StyledText-sc-1ggdu3j-0 MIUTU">Featured</h2>
+      <h2 className="Text__StyledText-sc-1ggdu3j-0 MIUTU">Featured</h2>
       <div
         className="styles__FeaturedBlock-sc-1qw1enh-1 jMYFMD"
         style={isMobile ? { gridTemplateColumns: "1fr" } : {}}
@@ -104,10 +104,10 @@ const Content = () => {
           justifyContent: "space-between",
         }}
       >
-        <h2 color="#1E2330" class="Text__StyledText-sc-1ggdu3j-0 MIUTU">
+        <h2 color="#1E2330" className="Text__StyledText-sc-1ggdu3j-0 MIUTU">
           Share your content
         </h2>
-        <a class="foLnLr" href="/marketplace/categories/share-content">
+        <a className="foLnLr" href="/marketplace/categories/share-content">
           See 23 Apps
         </a>
       </div>
@@ -266,10 +266,10 @@ const Money = () => {
           justifyContent: "space-between",
         }}
       >
-        <h2 color="#1E2330" class="Text__StyledText-sc-1ggdu3j-0 MIUTU">
+        <h2 color="#1E2330" className="Text__StyledText-sc-1ggdu3j-0 MIUTU">
           Make and collect Money
         </h2>
-        <a class="foLnLr" href="/marketplace/categories/share-content">
+        <a className="foLnLr" href="/marketplace/categories/share-content">
           See 14 Apps
         </a>
       </div>

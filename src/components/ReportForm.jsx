@@ -16,8 +16,8 @@ export default function ReportForm() {
       </p>
 
       <div>
-        <div class="contact-form-wrapper d-flex justify-content-center">
-          <form action="#" class="contact-form">
+        <div className="contact-form-wrapper d-flex justify-content-center">
+          <form action="#" className="contact-form">
 
            
             <Field type="text" placeholder="Username" stickyLabel />
@@ -31,14 +31,14 @@ export default function ReportForm() {
             <div>
               <textarea
                 id="message"
-                class="form-control rounded border-white mb-3 form-text-area"
+                className="form-control rounded border-white mb-3 form-text-area"
                 rows="5"
                 cols="30"
                 placeholder="Do you have any additional comments that will help us understand your report?*"
                 required
               ></textarea>
             </div>
-            <div class="submit-button-wrapper" >
+            <div className="submit-button-wrapper" >
               <RoundButton text={"Submit Form"} />
             </div>
           </form>

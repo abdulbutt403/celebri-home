@@ -1,54 +1,50 @@
 import React from "react";
 import useResponsive from "../Hooks/responsive";
 import { IconLinkT, IconTiktok, IconTwitter, InstagramIcon } from "../svgs";
+import { useNavigate } from "react-router-dom";
 
 export default function Footer() {
   const companyLinks = [
-    "The CelebriLinks Blog",
-    "Engineering Blog",
-    "Marketplace",
-    "What's New",
-    "About",
-    "Press",
-    "Careers",
-    "Social Good",
-    "Contact",
+    { text: "The CelebriLinks Blog", path: "/blogs" },
+    { text: "Contact", path: "/contact" },
+    { text: "Marketplace", path: "/marketplace" },
+    { text: "What's New", path: "/browse" },
+    // Add more company links as needed
   ];
 
   const communityLinks = [
-    "CelebriLinks Creator Services Program",
-    "CelebriLinks for Enterprise",
-    "2022 Creator Report",
-    "Charities",
-    "Creator Profile Directory",
-    "Explore Templates",
+    { text: "CelebriLinks Creators", path: "/users" },
+    { text: "CelebriLinks Blogs", path: "/blogs" },
+    { text: "2022 Creator Report", path: "/report-problem" },
+    { text: "Cookies", path: "/cookie" },
+    // Add more community links as needed
   ];
 
   const supportLinks = [
-    "Help Topics",
-    "Getting Started",
-    "CelebriLinks Pro",
-    "Features &amp; How-Tos",
-    "FAQs",
-    "Report a Violation",
+    { text: "Help Topics", path: "/help" },
+    { text: "Getting Started", path: "/signup" },
+    { text: "CelebriLinks Pro", path: "/terms" },
+    { text: "Features & How-Tos", path: "/pricing" },
+    // Add more support links as needed
   ];
 
   const trustLinks = [
-    "Terms & Conditions",
-    "Privacy Notice",
-    "Cookie Notice",
-    "Trust Center",
-    "Cookie Preferences",
+    { text: "Terms & Conditions", path: "/terms" },
+    { text: "Privacy Notice", path: "/privacy" },
+    { text: "Cookie Notice", path: "/cookie" },
+    { text: "Trust Center", path: "/trust-center" },
+    // Add more trust links as needed
   ];
 
-  const isMobile = useResponsive()
+  const isMobile = useResponsive();
 
   return (
-    <div className="footer" style={{minHeight: '230vh'}}>
+    <div className="footer" style={{ minHeight: "230vh" }}>
       <div className="footer-form">
         {" "}
         <h1>
-          Jumpstart your corner of {isMobile && <br />} the {!isMobile && <br />}
+          Jumpstart your corner of {isMobile && <br />} the{" "}
+          {!isMobile && <br />}
           internet today
         </h1>
         <div className="mt-48">
@@ -62,9 +58,10 @@ export default function Footer() {
       </div>
 
       <div className="links-wrap">
-        <div class="bTRgKr flex">
-          <Nav text={"Company"} array={companyLinks} />
+        <div className="bTRgKr flex" style={{ paddingBottom: 60 }}>
           <Nav text={"Community"} array={communityLinks} />
+          <Nav text={"Company"} array={companyLinks} />
+
           <Nav text={"Support"} array={supportLinks} />
           <Nav text={"trust"} array={trustLinks} />
         </div>
@@ -72,10 +69,10 @@ export default function Footer() {
         <div
           style={{
             display: "flex",
-            alignItems: isMobile ? "start": "center",
+            alignItems: isMobile ? "start" : "center",
             justifyContent: "space-between",
-            gap: isMobile ? 20: "auto", 
-            flexDirection:  isMobile ? 'column': 'row'
+            gap: isMobile ? 20 : "auto",
+            flexDirection: isMobile ? "column" : "row",
           }}
         >
           <div className="list-right">
@@ -92,8 +89,13 @@ export default function Footer() {
 }
 
 const RoundButton = ({ text }) => {
+  const navigate = useNavigate();
   return (
-    <button className="claim-btn">
+    <button
+      className="claim-btn"
+      onClick={() => navigate("/signup")}
+      style={{ border: "none", outline: "none", cursor: "pointer" }}
+    >
       <div className="claim-btn-inner">
         <span className="claim-btn-text">{text}</span>
       </div>
@@ -110,27 +112,31 @@ const HalfInput = () => {
   );
 };
 
-const Link = ({ text }) => {
+const Link = ({ text, path }) => {
   return (
-    <a class="gQHsyf">
-      <p class="cpeqoh">{text}</p>
+    <a
+      className="gQHsyf lom"
+      style={{ cursor: "pointer" }}
+      onClick={() => (window.location.href = path)}
+    >
+      <p className="cpeqoh">{text}</p>
     </a>
   );
 };
 
 const Nav = ({ text, array }) => {
   return (
-    <div class="wrNff">
-      <div class="kLEIyT">
+    <div className="wrNff"  style={{zIndex: 100000}}>
+      <div className="kLEIyT">
         {text === "trust" ? (
-          <h4 class="dubjts">Trust &amp; Legal</h4>
+          <h4 className="dubjts">Trust &amp; Legal</h4>
         ) : (
-          <h4 class="dubjts">{text}</h4>
+          <h4 className="dubjts">{text}</h4>
         )}
       </div>
       <nav>
-        {array.map((x) => (
-          <Link text={x} />
+        {array.map((link, index) => (
+          <Link key={index} text={link.text} path={link.path} />
         ))}
       </nav>
     </div>
@@ -138,8 +144,13 @@ const Nav = ({ text, array }) => {
 };
 
 const LoginButton = () => {
+  const navigate = useNavigate();
   return (
-    <div className="login-btn">
+    <div
+      className="login-btn"
+      onClick={() => navigate("/login")}
+      style={{ border: "none", outline: "none", cursor: "pointer" }}
+    >
       <span className="login-text">Log in</span>
     </div>
   );
@@ -174,10 +185,11 @@ const SocialMediaIcons = () => {
 
 const BigLogo = () => {
   return (
-    <div class="kcskEf box" style={{ height: 200, display: 'flex', justifyContent: 'center' }}>
-
-        <img src="big-white.png" style={{ maxWidth: "80%" }} />
-      
+    <div
+      className="kcskEf box"
+      style={{ height: 200, display: "flex", justifyContent: "center" }}
+    >
+      <img src="big-white.png" style={{ maxWidth: "80%" }} />
     </div>
   );
 };

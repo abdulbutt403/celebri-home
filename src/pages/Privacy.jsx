@@ -9,12 +9,12 @@ export default function Privacy() {
     <div className="home-page">
       <Navbar />
       <div className="terms-page">
-        <h1 class="cFMxiM">Privacy Notice</h1>
+        <h1 className="cFMxiM">Privacy Notice</h1>
 
         <div
           itemprop="text"
           font-family="1"
-          class="styles__StyledDiv-sc-jb2at6-0 gGDurp"
+          className="styles__StyledDiv-sc-jb2at6-0 gGDurp"
           style={isMobile ? {width: '90vw', overflowX: 'hidden'}: {}}
         >
           <p>
@@ -1067,7 +1067,7 @@ export default function Privacy() {
               Link or Video link functions to allow you to display Youtube
               videos on your CelebriLinks. This is covered by&nbsp;
               <a
-                class="c-link"
+                className="c-link"
                 href="https://policies.google.com/privacy?hl=en"
                 target="_blank"
               >

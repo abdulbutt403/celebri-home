@@ -368,8 +368,8 @@ const Activity = () => {
         width: "100%",
       }}
     >
-      <div class="flex h-auto min-w-max items-center">
-        <h2 class="leading-heading mr-1.5 text-lg font-semibold">Activity</h2>
+      <div className="flex h-auto min-w-max items-center">
+        <h2 className="leading-heading mr-1.5 text-lg font-semibold">Activity</h2>
         <WhatIcon />
       </div>
       <div className="sc-fodVxV sc-fFubgz gndtOw bjNVbG sc-fodVxV gndtOw empty">
@@ -414,8 +414,8 @@ const Performance = ({ links }) => {
         width: "100%",
       }}
     >
-      <div class="flex h-auto min-w-max items-center">
-        <h2 class="leading-heading mr-1.5 text-lg font-semibold">
+      <div className="flex h-auto min-w-max items-center">
+        <h2 className="leading-heading mr-1.5 text-lg font-semibold">
           Top Performing Links
         </h2>
         <WhatIcon />
@@ -432,9 +432,9 @@ const Performance = ({ links }) => {
 
 const LinkBox = ({ title, count }) => {
   return (
-    <div class="sc-ljRboo sc-jmhFOf performance-txt fFGAIg">
+    <div className="sc-ljRboo sc-jmhFOf performance-txt fFGAIg">
       <p style={{fontSize: 14, fontWeight: '500'}} >{title}</p>
-      <p class="sc-httYMd sc-kiYtDG sc-cKZHah jrzUKj performance-txt-2 f-600">
+      <p className="sc-httYMd sc-kiYtDG sc-cKZHah jrzUKj performance-txt-2 f-600">
         {count} 
       </p>
     </div>

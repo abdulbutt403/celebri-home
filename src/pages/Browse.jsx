@@ -204,7 +204,7 @@ const Content = () => {
         }}
       >
         <h1 className=" browse-txt">All Link Apps and Integrations</h1>
-        <span class="styles__Badge-sc-1ftolr6-3 gXSiVi">48</span>
+        <span className="styles__Badge-sc-1ftolr6-3 gXSiVi">48</span>
       </div>
       <div
         style={{

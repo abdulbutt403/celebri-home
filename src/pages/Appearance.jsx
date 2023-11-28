@@ -214,7 +214,7 @@ const AddLinkPanel = () => {
             />
 
             <span
-              class="flex items-center justify-center"
+              className="flex items-center justify-center"
               style={{
                 fontSize: 16,
                 lineHeight: "1.5",
@@ -229,7 +229,7 @@ const AddLinkPanel = () => {
             >
               <PlusIcon />
               <span
-                class="block font-semibold text-md"
+                className="block font-semibold text-md"
                 style={{ paddingLeft: "0.5rem" }}
               >
                 Add social icons
@@ -406,8 +406,8 @@ const TextField = ({bio, setBio}) => {
           ></textarea>
         </div>
       </div>
-      <div class="flex justify-end">
-        <p class="text-concrete text-xs ">0 / 80</p>
+      <div className="flex justify-end">
+        <p className="text-concrete text-xs ">0 / 80</p>
       </div>
     </div>
   );

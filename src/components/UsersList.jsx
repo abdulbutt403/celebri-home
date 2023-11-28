@@ -19,13 +19,13 @@ const UsersList = () => {
 
       <div className="search-engine" style={{ width: '93.2%', marginTop: '5rem', paddingBottom: '10em', display: 'flex'}}>
         <div className="filter">
-          <div class="filter-hd">
+          <div className="filter-hd">
             <h3>Categories</h3>
           </div>
-          <div class="filter-links">
-            <div class="filter-btns">Filter by Men</div>
-            <div class="filter-btns">Filter by Women</div>
-            <div class="filter-btns">Filter by CelebriVIPs</div>
+          <div className="filter-links">
+            <div className="filter-btns">Filter by Men</div>
+            <div className="filter-btns">Filter by Women</div>
+            <div className="filter-btns">Filter by CelebriVIPs</div>
           </div>
         </div>
         <div className="results">

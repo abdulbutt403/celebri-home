@@ -1,8 +1,10 @@
 import React from "react";
 import useResponsive from "../Hooks/responsive";
+import { useNavigate } from "react-router-dom";
 
 const Hero3 = () => {
   const isMobile = useResponsive();
+  const navigate = useNavigate()
   return (
     <div className="hero3">
       <div style={{ paddingLeft: "1.3%", transform: "translateY(-30px)" }}>
@@ -23,8 +25,8 @@ const Hero3 = () => {
 
         <div className="mt-48">
           <div className="hero-form-wrap flex">
-            <form className="hero-form">
-              <RoundButton text={"Get started for free"} />
+            <form className="hero-form" onClick={() => navigate('/signup')} style={{border: 'none', outline: 'none'}}>
+              <RoundButton text={"Get started for free"} style={{border: 'none', outline: 'none'}}/>
             </form>
           </div>
         </div>

@@ -79,8 +79,8 @@ const Signup = () => {
           {step === 3 && <Field type="text" placeholder="Tell us your name" value={givenName} onChange={(e) => setGivenName(e.target.value)} />}
 
           {step < 3 && (
-            <p class="text-concrete text-sm" style={{ paddingTop: "2rem" }}>
-              By clicking <span class="font-semibold">Create account</span>, you
+            <p className="text-concrete text-sm" style={{ paddingTop: "2rem" }}>
+              By clicking <span className="font-semibold">Create account</span>, you
               agree to CelebriLinks's <a>Terms and Conditions</a> and confirm
               you have read our <a>Privacy Notice</a>. You may receive offers,
               news and updates from us.

@@ -23,15 +23,15 @@ export default function Cookie() {
           src="https://linktr.ee/_gatsby/image/7a52a25b068e0eb6bbefe085edbc4c6a/098a53fdb6081b452444da0bc4b6ae40/image-3.avif?eu=050ed3f8f2b45a2aed48f1574d4d604f63510deb15fbfd78b999b4d287fa5ad55428d222e85e77e965c5a8b22a6322c8310d165473b9ba4c5b0244826cf44cb06b53770fdfb95463f4e6d80ebd84172de0bbcfd3610d3e97ba2b1a1ac13078e787373b00d959ce4ae8c09d43299d0d43a4f7b9ea8871b34aedce545e1647ef923022bd617db5a5fca37438cb4d0fc13f8388a4d56b777e62278bce9bcbbeacf6a4cbf812b52fb0&a=w%3D2560%26h%3D1357%26fm%3Davif%26q%3D75&cd=a1f37f869e10a4cac566227b93cead8e"
         />
 
-        <h1 class="cFMxiM" style={{ textAlign: "center", marginTop: 30 }}>
+        <h1 className="cFMxiM" style={{ textAlign: "center", marginTop: 30 }}>
           Cookie Notice
         </h1>
 
-        <div class="styles__Box-sc-c44u6a-0 hvsrUt box styles__InnerContainer-sc-qp97t5-1 chvWrr">
+        <div className="styles__Box-sc-c44u6a-0 hvsrUt box styles__InnerContainer-sc-qp97t5-1 chvWrr">
           <div
             itemprop="text"
             font-family="1"
-            class="styles__StyledDiv-sc-jb2at6-0 itijnk"
+            className="styles__StyledDiv-sc-jb2at6-0 itijnk"
             style={isMobile ? { width: "90vw", overflowX: "hidden" } : {}}
           >
             <p>

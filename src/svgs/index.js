@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import useResponsive from "../Hooks/responsive";
 
-export const Logo = () => (
-  <img src={`${window.location.origin}/icon.png`} style={{ width: "60px" }} />
-);
+export const Logo = () => {
+  const navigate = useNavigate()
+  return <img src={`${window.location.origin}/icon.png`} style={{ width: "60px" , cursor: 'pointer'}} onClick={() => navigate('/')}/>
+};
 
 export const IconLinkT = () => (
   <svg
@@ -99,7 +101,7 @@ export const LinksIcon = () => (
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    class=" "
+    className=" "
     role="img"
     aria-hidden="false"
     aria-labelledby="ltclid0_title "
@@ -121,7 +123,7 @@ export const ApperanceIcon = () => (
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    class=" "
+    className=" "
     role="img"
     aria-hidden="false"
     aria-labelledby="ltclid1_title "
@@ -143,7 +145,7 @@ export const AnalyticsIcon = () => (
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    class=" "
+    className=" "
     role="img"
     aria-hidden="false"
     aria-labelledby="ltclid2_title "
@@ -165,7 +167,7 @@ export const SettingsIcon = () => (
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    class=" "
+    className=" "
     role="img"
     aria-hidden="false"
     aria-labelledby="ltclid3_title "
@@ -318,14 +320,14 @@ export const CookieIcon = () => (
 );
 
 export const PlusIcon = () => (
-  <span class="block pr-xs">
+  <span className="block pr-xs">
     <svg
       width="16"
       height="16"
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      class=" "
+      className=" "
       role="img"
       aria-hidden="true"
       aria-labelledby=" "
@@ -341,7 +343,7 @@ export const PlusIcon = () => (
 );
 
 export const SocialIcons = () => (
-  <svg viewBox="0 0 24 24" class="sc-hOqqkJ dTSpKS">
+  <svg viewBox="0 0 24 24" className="sc-hOqqkJ dTSpKS">
     <g
       id="Page-1"
       stroke="none"
@@ -366,7 +368,7 @@ export const SocialIcons = () => (
 );
 
 export const SupportBanner = () => (
-  <svg viewBox="0 0 24 24" class="sc-hOqqkJ dTSpKS">
+  <svg viewBox="0 0 24 24" className="sc-hOqqkJ dTSpKS">
     <g
       id="Page-1"
       stroke="none"
@@ -396,7 +398,7 @@ export const SupportBanner = () => (
 );
 
 export const MailingIcon = () => (
-  <svg viewBox="0 0 24 24" class="sc-hOqqkJ dTSpKS">
+  <svg viewBox="0 0 24 24" className="sc-hOqqkJ dTSpKS">
     <g
       id="Page-1"
       stroke="none"
@@ -426,7 +428,7 @@ export const MailingIcon = () => (
 );
 
 export const DollarIcon = () => (
-  <svg viewBox="0 0 24 24" class="sc-hOqqkJ dTSpKS">
+  <svg viewBox="0 0 24 24" className="sc-hOqqkJ dTSpKS">
     <g
       id="Page-1"
       stroke="none"
@@ -456,7 +458,7 @@ export const DollarIcon = () => (
 );
 
 export const SubscribeIcon = () => (
-  <svg viewBox="0 0 24 24" class="sc-hOqqkJ dTSpKS">
+  <svg viewBox="0 0 24 24" className="sc-hOqqkJ dTSpKS">
     <g
       id="Page-1"
       stroke="none"
@@ -501,9 +503,9 @@ export const LockedIcon = () => {
       }}
       viewBox="0 0 24 24"
       data-test="IconComponent"
-      class="sc-bkzZxe dZCgnv"
+      className="sc-bkzZxe dZCgnv"
     >
-      <rect data-test="IconComponent" class="sc-hHftDr eCnyGE"></rect>
+      <rect data-test="IconComponent" className="sc-hHftDr eCnyGE"></rect>
       <path d="M19.5,9.5h-.75V6.75a6.75,6.75,0,0,0-13.5,0V9.5H4.5a2,2,0,0,0-2,2V22a2,2,0,0,0,2,2h15a2,2,0,0,0,2-2V11.5A2,2,0,0,0,19.5,9.5Zm-7.5,9a2,2,0,1,1,2-2A2,2,0,0,1,12,18.5ZM16.25,9a.5.5,0,0,1-.5.5H8.25a.5.5,0,0,1-.5-.5V6.75a4.25,4.25,0,0,1,8.5,0Z"></path>
     </svg>
   );
@@ -517,7 +519,7 @@ export const ArrowDown = () => (
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    class="shrink-0"
+    className="shrink-0"
   >
     <path
       d="M5 6.5L8.00093 9.5L11 6.50187"
@@ -537,7 +539,7 @@ export const Globe = () => (
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    class="shrink-0"
+    className="shrink-0"
   >
     <path
       d="M8 15C11.866 15 15 11.866 15 8C15 4.13401 11.866 1 8 1C4.13401 1 1 4.13401 1 8C1 11.866 4.13401 15 8 15Z"
@@ -572,7 +574,7 @@ export const WhiteSearch = () => (
     height="21"
     viewBox="0 0 22 21"
     xmlns="http://www.w3.org/2000/svg"
-    class="fill-inherit"
+    className="fill-inherit"
     style={{ color: "#fff", fill: "#fff" }}
   >
     <path
@@ -601,7 +603,7 @@ export const WhatIcon = () => (
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    class="text-black "
+    className="text-black "
     role="img"
     aria-hidden="false"
     aria-labelledby="ltclid:36_title "
@@ -721,7 +723,7 @@ export const CustomIcon3 = ({ tran }) => {
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      class=" "
+      className=" "
       role="img"
       aria-hidden="true"
       aria-labelledby=" "
@@ -746,7 +748,7 @@ export const CustomIcon4 = ({ tran }) => {
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      class=" "
+      className=" "
       role="img"
       aria-hidden="true"
       aria-labelledby=" "

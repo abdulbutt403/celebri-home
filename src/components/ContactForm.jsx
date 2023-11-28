@@ -12,10 +12,10 @@ export default function ContactForm() {
       </p>
 
       <div>
-        <div class="contact-form-wrapper d-flex justify-content-center">
-          <form action="#" class="contact-form">
-            <h5 class="title">Contact us</h5>
-            <p class="description">
+        <div className="contact-form-wrapper d-flex justify-content-center">
+          <form action="#" className="contact-form">
+            <h5 className="title">Contact us</h5>
+            <p className="description">
               Feel free to contact us if you need any assistance, any help or
               another question.
             </p>
@@ -26,14 +26,14 @@ export default function ContactForm() {
             <div>
               <textarea
                 id="message"
-                class="form-control rounded border-white mb-3 form-text-area"
+                className="form-control rounded border-white mb-3 form-text-area"
                 rows="5"
                 cols="30"
                 placeholder="Message"
                 required
               ></textarea>
             </div>
-            <div class="submit-button-wrapper">
+            <div className="submit-button-wrapper">
               <RoundButton text={"Send message"} />
             </div>
           </form>

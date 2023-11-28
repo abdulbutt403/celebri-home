@@ -1,1 +1,1 @@
-export const baseUrl = 'http://localhost:9000'
+export const baseUrl = 'https://celebri-backend.onrender.com'
