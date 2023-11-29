@@ -22,10 +22,11 @@ export default function Navbar() {
           <Logo />
           {!isMobile && (
             <>
-              <div onClick={() => navigate("/marketplace")}>Marketplace</div>
+         
               <div onClick={() => navigate("/users")}>Discover</div>
               <div onClick={() => navigate("/pricing")}>Pricing</div>
               <div onClick={() => navigate("/blogs")}>Blogs</div>
+              <div onClick={() => navigate("/contact")}>Contact</div>
             </>
           )}
         </div>
@@ -77,10 +78,11 @@ export default function Navbar() {
               }}
             >
               <div style={{color: 'pink', paddingLeft: 20, paddingTop: 150, paddingRight: 30}} className="nav-limst">
-              <div onClick={() => navigate("/marketplace")}>Marketplace</div>
+
               <div onClick={() => navigate("/users")}>Discover</div>
               <div onClick={() => navigate("/pricing")}>Pricing</div>
               <div onClick={() => navigate("/blogs")}>Blogs</div>
+              <div onClick={() => navigate("/contact")}>Contact</div>
               </div>
             </div>
           )}

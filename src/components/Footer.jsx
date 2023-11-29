@@ -7,7 +7,7 @@ export default function Footer() {
   const companyLinks = [
     { text: "The CelebriLinks Blog", path: "/blogs" },
     { text: "Contact", path: "/contact" },
-    { text: "Marketplace", path: "/marketplace" },
+    { text: "Pricing", path: "/pricing" },
     { text: "What's New", path: "/browse" },
     // Add more company links as needed
   ];
@@ -15,7 +15,7 @@ export default function Footer() {
   const communityLinks = [
     { text: "CelebriLinks Creators", path: "/users" },
     { text: "CelebriLinks Blogs", path: "/blogs" },
-    { text: "2022 Creator Report", path: "/report-problem" },
+    { text: "Creator Report", path: "/report-problem" },
     { text: "Cookies", path: "/cookie" },
     // Add more community links as needed
   ];
