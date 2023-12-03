@@ -3,11 +3,10 @@ import Field from "../components/Common/Field";
 import useResponsive from "../Hooks/responsive";
 import { LogoFullIcon } from "../svgs";
 import { isValidEmail } from "../utils";
-import toast from "react-hot-toast";
+import toast, { LoaderIcon } from "react-hot-toast";
 import axios from "axios";
 import { baseUrl } from "../constants";
 import { useNavigate } from "react-router-dom";
-
 
 const Signup = () => {
   const isMobile = useResponsive();
@@ -21,9 +20,9 @@ const Signup = () => {
   const [userName, setUserName] = useState("");
 
   const nextStep = () => setStep((x) => x + 1);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const register = () => {
-    setLoading(true)
+    setLoading(true);
     const userData = {
       email,
       password,
@@ -31,21 +30,22 @@ const Signup = () => {
       userName,
       profileCategory: selected,
     };
-  
-    // Make a POST request to your sign-up API
-    axios.post(`${baseUrl}/users/signup`, userData)
-      .then(response => {
-        toast.success('Registration successful');
 
-        setTimeout(() => navigate('/login'), 1000) // You can replace this with a redirect or other logic
+    // Make a POST request to your sign-up API
+    axios
+      .post(`${baseUrl}/users/signup`, userData)
+      .then((response) => {
+        toast.success("Registration successful");
+
+        setTimeout(() => navigate("/login"), 1000); // You can replace this with a redirect or other logic
       })
-      .catch(error => {
-        alert('Registration failed'); // Handle the error appropriately
+      .catch((error) => {
+        alert("Registration failed"); // Handle the error appropriately
         toast.error(error);
-        setLoading(false)
+        setLoading(false);
       });
   };
-  
+
   return (
     <div className="login-wrap">
       <div className="logo-wrap">
@@ -69,21 +69,46 @@ const Signup = () => {
               "Choose a strong password with at least 8 characters."}
             {step === 3 && "For a personalized Linktree experience"}
           </p>
-          {step === 1 && <Field type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>}
           {step === 1 && (
-            <Field type="text" placeholder="Username" stickyLabel value={userName} onChange={(e) => setUserName(e.target.value)} />
+            <Field
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           )}
-          {step === 2 &&
-           <Field type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)}  />
-           }
-          {step === 3 && <Field type="text" placeholder="Tell us your name" value={givenName} onChange={(e) => setGivenName(e.target.value)} />}
+          {step === 1 && (
+            <Field
+              type="text"
+              placeholder="Username"
+              stickyLabel
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+            />
+          )}
+          {step === 2 && (
+            <Field
+              type="password"
+              placeholder="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          )}
+          {step === 3 && (
+            <Field
+              type="text"
+              placeholder="Tell us your name"
+              value={givenName}
+              onChange={(e) => setGivenName(e.target.value)}
+            />
+          )}
 
           {step < 3 && (
             <p className="text-concrete text-sm" style={{ paddingTop: "2rem" }}>
-              By clicking <span className="font-semibold">Create account</span>, you
-              agree to CelebriLinks's <a>Terms and Conditions</a> and confirm
-              you have read our <a>Privacy Notice</a>. You may receive offers,
-              news and updates from us.
+              By clicking <span className="font-semibold">Create account</span>,
+              you agree to CelebriLinks's <a>Terms and Conditions</a> and
+              confirm you have read our <a>Privacy Notice</a>. You may receive
+              offers, news and updates from us.
             </p>
           )}
 
@@ -222,42 +247,52 @@ const Signup = () => {
             </div>
           )}
 
-        {step === 1 && (
-            <button className="login-page-btn" onClick={() => {
-              if(!isValidEmail(email)){
-                toast.error('Invalid Email')
-                return
-              }
-              if(!userName){
-                toast.error(`User's Name is required `)
-                return
-              }
-              nextStep()
-            }}>
+          {step === 1 && (
+            <button
+              className="login-page-btn"
+              onClick={() => {
+                if (!isValidEmail(email)) {
+                  toast.error("Invalid Email");
+                  return;
+                }
+                if (!userName) {
+                  toast.error(`User's Name is required `);
+                  return;
+                }
+                nextStep();
+              }}
+            >
               Continue
             </button>
           )}
 
           {step === 2 && (
-                   <button className="login-page-btn" onClick={() => {
-                    if(password.length < 6 ){
-                      toast.error('Enter atleast 6 characters password')
-                      return
-                    }
-                    nextStep()
-                  }}>
+            <button
+              className="login-page-btn"
+              onClick={() => {
+                if (password.length < 6) {
+                  toast.error("Enter atleast 6 characters password");
+                  return;
+                }
+                nextStep();
+              }}
+            >
               Continue
             </button>
           )}
           {step === 3 && (
-                  <button className="login-page-btn" onClick={() => {
-                    if(!givenName ){
-                      toast.error('Enter your complete name')
-                      return
-                    }
-                    register()
-                  }}>
-              Create account
+            <button
+              style={loading? {pointerEvents: 'none'}: {}}
+              className="login-page-btn"
+              onClick={() => {
+                if (!givenName) {
+                  toast.error("Enter your complete name");
+                  return;
+                }
+                register();
+              }}
+            >
+              {loading ? <LoaderIcon/> : 'Create account'}
             </button>
           )}
 
