@@ -930,8 +930,32 @@ button {
   width: 93.7%;
 }
 
+
+
+.pricing-cards {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  display: grid;
+  margin-top: 2rem;
+  width: 93.7%;
+}
+
+
+.pricing-cards.two {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  display: grid;
+  margin-top: 2rem;
+  width: 93.7%;
+}
+
+
 .pricing-cards>div {
   margin-bottom: 1rem;
+  box-shadow: 19px 16px 20px 2px rgb(0 0 0 / 5%);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
 }
 
 
@@ -953,6 +977,17 @@ button {
   -webkit-box-pack: justify;
   justify-content: space-between;
   gap: 0.5rem;
+}
+
+.pricing-text-top>ul{
+  list-style: circle;
+}
+
+.pricing-text-top>ul>li{
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -1px;
+  line-height: 30px;
 }
 
 .kZkFqo {

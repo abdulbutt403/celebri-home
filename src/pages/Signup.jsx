@@ -7,6 +7,8 @@ import toast, { LoaderIcon } from "react-hot-toast";
 import axios from "axios";
 import { baseUrl } from "../constants";
 import { useNavigate } from "react-router-dom";
+import Pricings from "../components/Pricings";
+import SelectPlan from "../components/SelectPlan";
 
 const Signup = () => {
   const isMobile = useResponsive();
@@ -18,6 +20,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [givenName, setGivenName] = useState("");
   const [userName, setUserName] = useState("");
+  const [plan, setPlan] = useState("user");
 
   const nextStep = () => setStep((x) => x + 1);
   const navigate = useNavigate();
@@ -29,6 +32,7 @@ const Signup = () => {
       givenName,
       userName,
       profileCategory: selected,
+      plan
     };
 
     // Make a POST request to your sign-up API
@@ -60,14 +64,15 @@ const Signup = () => {
               ? "Create your account"
               : step === 2
               ? "Enter Your Password"
-              : "Tell us about yourself"}
+              : step === 3
+              ? "Pick  a Plan" : "Tell us About Yourself"}
           </h1>
           <p className="signup-tt">
             {step === 1 &&
               "Choose your CelebriLinks username. You can always change it later."}
             {step === 2 &&
               "Choose a strong password with at least 8 characters."}
-            {step === 3 && "For a personalized Linktree experience"}
+            {step === 4 && "For a personalized Celebrilinks experience"}
           </p>
           {step === 1 && (
             <Field
@@ -95,13 +100,21 @@ const Signup = () => {
             />
           )}
           {step === 3 && (
-            <Field
-              type="text"
-              placeholder="Tell us your name"
-              value={givenName}
-              onChange={(e) => setGivenName(e.target.value)}
-            />
+            <SelectPlan setPlan={setPlan} setStep={setStep}/>
           )}
+
+{step === 4 && (
+        <Field
+        type="text"
+        placeholder="Tell us your name"
+        value={givenName}
+        onChange={(e) => setGivenName(e.target.value)}
+      />
+          )}
+
+
+
+          
 
           {step < 3 && (
             <p className="text-concrete text-sm" style={{ paddingTop: "2rem" }}>
@@ -112,10 +125,10 @@ const Signup = () => {
             </p>
           )}
 
-          {step === 3 && <br />}
-          {step === 3 && <br />}
+          {step === 4 && <br />}
+          {step === 4 && <br />}
 
-          {step === 3 && (
+          {step === 4 && (
             <span
               className="font-semibold"
               style={{ fontSize: 14.2, fontWeight: 600, opacity: 0.8 }}
@@ -124,7 +137,7 @@ const Signup = () => {
             </span>
           )}
 
-          {step === 3 && (
+          {step === 4 && (
             <div
               style={{
                 display: "flex",
@@ -280,9 +293,9 @@ const Signup = () => {
               Continue
             </button>
           )}
-          {step === 3 && (
+          {step === 4 && (
             <button
-              style={loading? {pointerEvents: 'none'}: {}}
+              style={loading ? { pointerEvents: "none" } : {}}
               className="login-page-btn"
               onClick={() => {
                 if (!givenName) {
@@ -292,7 +305,7 @@ const Signup = () => {
                 register();
               }}
             >
-              {loading ? <LoaderIcon/> : 'Create account'}
+              {loading ? <LoaderIcon /> : "Create account"}
             </button>
           )}
 

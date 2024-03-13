@@ -30,6 +30,7 @@ import { Toaster } from "react-hot-toast";
 import Reset from "./pages/Reset";
 import PrivateRoutes from "./PrivateRoute";
 import ShareProfile from "./pages/ShareProfile";
+import Success from "./pages/Success";
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogPost/:id" element={<BlogPost />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/success" element={<Success />} />
 
           <Route element={<PrivateRoutes/>}>
             <Route path="/admin" element={<Navigate to="/admin/links" />} />

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function PricingCard({ tag, price, btnText, extraTag, badge }) {
+export default function PricingCard({ tag, price, btnText, extraTag, badge, html }) {
   const btnStyle = badge
     ? {
         background: "rgb(255, 108, 2)",
@@ -34,10 +34,10 @@ export default function PricingCard({ tag, price, btnText, extraTag, badge }) {
       </div>
       <div className="pricing-card-footer">
         <div className="styles__Box-sc-c44u6a-0 pricing-card-text ">
-          <p className="pricing-text-top">
+          {html ? <div className="pricing-text-top" style={{textAlign: 'left'}} dangerouslySetInnerHTML={{__html : html}}></div> :<p className="pricing-text-top">
             Unlimited links and a <br /> customizable CelebriLinks to connect your
             community to everything you are.
-          </p>
+          </p>}
           <div className="pricing-btn-wrap">
             <a className="pricing-btn-inner" style={btnStyle}>
               {btnText}
