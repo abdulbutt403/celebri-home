@@ -706,6 +706,7 @@ const ThemePanel = () => {
         if (res.success === true) {
           toast.success(res.message);
         }
+        toast.error(res.error)
       })
       .catch(() => {});
   };
