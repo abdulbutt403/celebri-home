@@ -10,6 +10,7 @@ import toast, { LoaderIcon, Toaster } from "react-hot-toast";
 
 export default function Appearance() {
   const isMobile = useResponsive();
+
   return (
     <div className="admin-panel">
       <AdminHeader />
@@ -69,8 +70,8 @@ export default function Appearance() {
 
 const AddLinkPanel = () => {
   const [selectedImage, setSelectedImage] = useState(null);
-  const token = localStorage.getItem('token')
-  const userData = jwtDecode(token)
+  const token = localStorage.getItem("token");
+  const userData = jwtDecode(token);
   const [url, setUrl] = useState(null);
   const [givenName, setGivenName] = useState("");
   const [bio, setBio] = useState("");
@@ -79,21 +80,21 @@ const AddLinkPanel = () => {
   const isMobile = useResponsive();
 
   useEffect(() => {
-   fetchUser()
-  }, [])
-  
+    fetchUser();
+  }, []);
+
   const fetchUser = async () => {
     try {
       const userId = userData._id;
       const response = await axios.get(`${baseUrl}/users/${userId}`);
 
       // Set the user data in the state
-      const user = response.data.user
-      setGivenName(user.givenName)
-      setBio(user.bio)
-      if(user.profilePic){
-      setUrl(`${baseUrl}/uploads/${user.profilePic}`)
-      setSelectedImage('temp')
+      const user = response.data.user;
+      setGivenName(user.givenName);
+      setBio(user.bio);
+      if (user.profilePic) {
+        setUrl(`${baseUrl}/uploads/${user.profilePic}`);
+        setSelectedImage("temp");
       }
     } catch (error) {
       console.error(error);
@@ -102,32 +103,35 @@ const AddLinkPanel = () => {
   };
 
   const handleEditProfile = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
       // Create a FormData object to send the data and file
       const formData = new FormData();
-      formData.append('givenName', givenName);
-      formData.append('userId', userData._id)
-      formData.append('bio', bio);
-    // Check if selectedImage is a valid File object
-    if (selectedImage instanceof File) {
-      formData.append('profilePicture', selectedImage);
-    }
-
+      formData.append("givenName", givenName);
+      formData.append("userId", userData._id);
+      formData.append("bio", bio);
+      // Check if selectedImage is a valid File object
+      if (selectedImage instanceof File) {
+        formData.append("profilePicture", selectedImage);
+      }
 
       // Make a POST request to the edit profile API
-      const response = await axios.post(`${baseUrl}/users/editprofile`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await axios.post(
+        `${baseUrl}/users/editprofile`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       console.log(response.data); // Handle the response as needed
-      toast.success('Profile updated !')
-      setLoading(false)
+      toast.success("Profile updated !");
+      setLoading(false);
     } catch (error) {
       console.error(error);
-      setLoading(false)
+      setLoading(false);
       // Handle errors appropriately
     }
   };
@@ -188,28 +192,27 @@ const AddLinkPanel = () => {
                 />
               </div>
             </div>
-            <TitleField givenName={givenName} setGivenName={setGivenName}/>
-            <TextField setBio={setBio} bio={bio}/>
+            <TitleField givenName={givenName} setGivenName={setGivenName} />
+            <TextField setBio={setBio} bio={bio} />
             <button
               style={{
                 backgroundColor: "rgb(93 24 162 / 1)",
-                width: '120px',
+                width: "120px",
                 color: "white",
                 borderRadius: "9999px",
                 marginLeft: 40,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
               onClick={handleEditProfile}
               className="relative transition duration-75 ease-out w-full h-10 px-1 rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-black antialiased w-full hover:bg-primary-alt active:bg-primary-alt"
             >
-              {loading? <LoaderIcon/> : 'Update'}
+              {loading ? <LoaderIcon /> : "Update"}
             </button>
 
             <hr
-              style={{ height: 10, marginTop: 26,  }}
+              style={{ height: 10, marginTop: 26 }}
               classname="my-7 bg-sand w-full"
             />
 
@@ -320,7 +323,7 @@ const RemoveButton = ({ selectedImage, setSelectedImage, setUrl }) => {
   );
 };
 
-const TitleField = ({givenName, setGivenName}) => {
+const TitleField = ({ givenName, setGivenName }) => {
   return (
     <div
       className="flex rounded-[10px] leading-none border-solid border-2 overflow-hidden w-full border-transparent"
@@ -374,7 +377,7 @@ const TitleField = ({givenName, setGivenName}) => {
   );
 };
 
-const TextField = ({bio, setBio}) => {
+const TextField = ({ bio, setBio }) => {
   return (
     <div style={{ width: "90%", margin: "auto", marginTop: 10 }}>
       <div className="flex rounded-[10px] leading-none border-solid border-2 overflow-hidden w-full border-transparent">
@@ -604,139 +607,108 @@ const ThemePanel = () => {
       bgImage:
         "https://mfe-appearance.production.linktr.ee/images/selector-pebble-blue.48047a34097e85836255.png",
       text: "Pebble Blue",
+      color: "#6A8D92",
     },
     {
       bgImage:
         "https://mfe-appearance.production.linktr.ee/images/selector-pebble-yellow.adffcf319fe3cb16a9b7.png",
       text: "Pebble Yellow",
+      color: "#FFD166",
     },
     {
       bgImage:
         "https://mfe-appearance.production.linktr.ee/images/selector-pebble-pink.71c34887a9c4ca41828c.png",
       text: "Pebble Pink",
+      color: "#F3BAC3",
     },
     {
       bgImage:
         "https://mfe-appearance.production.linktr.ee/images/selector-pebble-blue.48047a34097e85836255.png",
       text: "Pebble Blue",
+      color: "#6A8D92",
     },
     {
       bgImage:
         "https://mfe-appearance.production.linktr.ee/images/selector-pebble-yellow.adffcf319fe3cb16a9b7.png",
       text: "Pebble Yellow",
+      color: "#FFD166",
     },
     {
       bgImage:
         "https://mfe-appearance.production.linktr.ee/images/selector-pebble-pink.71c34887a9c4ca41828c.png",
       text: "Pebble Pink",
+      color: "#F3BAC3",
     },
     {
       bgImage:
         "https://mfe-appearance.production.linktr.ee/images/selector-pebble-blue.48047a34097e85836255.png",
       text: "Pebble Blue",
+      color: "#6A8D92",
     },
     {
       bgImage:
         "https://mfe-appearance.production.linktr.ee/images/selector-pebble-yellow.adffcf319fe3cb16a9b7.png",
       text: "Pebble Yellow",
+      color: "#FFD166",
     },
     {
       bgImage:
         "https://mfe-appearance.production.linktr.ee/images/selector-pebble-pink.71c34887a9c4ca41828c.png",
       text: "Pebble Pink",
+      color: "#F3BAC3",
     },
     {
       bgImage:
         "https://mfe-appearance.production.linktr.ee/images/selector-pebble-blue.48047a34097e85836255.png",
       text: "Pebble Blue",
+      color: "#6A8D92",
     },
     {
       bgImage:
         "https://mfe-appearance.production.linktr.ee/images/selector-pebble-yellow.adffcf319fe3cb16a9b7.png",
       text: "Pebble Yellow",
+      color: "#FFD166",
     },
     {
       bgImage:
         "https://mfe-appearance.production.linktr.ee/images/selector-pebble-pink.71c34887a9c4ca41828c.png",
       text: "Pebble Pink",
+      color: "#F3BAC3",
     },
-    {
-      bgImage:
-        "https://mfe-appearance.production.linktr.ee/images/selector-pebble-blue.48047a34097e85836255.png",
-      text: "Pebble Blue",
-    },
-    {
-      bgImage:
-        "https://mfe-appearance.production.linktr.ee/images/selector-pebble-yellow.adffcf319fe3cb16a9b7.png",
-      text: "Pebble Yellow",
-    },
-    {
-      bgImage:
-        "https://mfe-appearance.production.linktr.ee/images/selector-pebble-pink.71c34887a9c4ca41828c.png",
-      text: "Pebble Pink",
-    },
-    {
-      bgImage:
-        "https://mfe-appearance.production.linktr.ee/images/selector-pebble-blue.48047a34097e85836255.png",
-      text: "Pebble Blue",
-    },
-    {
-      bgImage:
-        "https://mfe-appearance.production.linktr.ee/images/selector-pebble-yellow.adffcf319fe3cb16a9b7.png",
-      text: "Pebble Yellow",
-    },
-    {
-      bgImage:
-        "https://mfe-appearance.production.linktr.ee/images/selector-pebble-pink.71c34887a9c4ca41828c.png",
-      text: "Pebble Pink",
-    },
-    {
-      bgImage:
-        "https://mfe-appearance.production.linktr.ee/images/selector-pebble-blue.48047a34097e85836255.png",
-      text: "Pebble Blue",
-    },
-    {
-      bgImage:
-        "https://mfe-appearance.production.linktr.ee/images/selector-pebble-yellow.adffcf319fe3cb16a9b7.png",
-      text: "Pebble Yellow",
-    },
-    {
-      bgImage:
-        "https://mfe-appearance.production.linktr.ee/images/selector-pebble-pink.71c34887a9c4ca41828c.png",
-      text: "Pebble Pink",
-    },
-    {
-      bgImage:
-        "https://mfe-appearance.production.linktr.ee/images/selector-pebble-blue.48047a34097e85836255.png",
-      text: "Pebble Blue",
-    },
-    {
-      bgImage:
-        "https://mfe-appearance.production.linktr.ee/images/selector-pebble-yellow.adffcf319fe3cb16a9b7.png",
-      text: "Pebble Yellow",
-    },
-    {
-      bgImage:
-        "https://mfe-appearance.production.linktr.ee/images/selector-pebble-pink.71c34887a9c4ca41828c.png",
-      text: "Pebble Pink",
-    },
-    {
-      bgImage:
-        "https://mfe-appearance.production.linktr.ee/images/selector-pebble-blue.48047a34097e85836255.png",
-      text: "Pebble Blue",
-    },
-    {
-      bgImage:
-        "https://mfe-appearance.production.linktr.ee/images/selector-pebble-yellow.adffcf319fe3cb16a9b7.png",
-      text: "Pebble Yellow",
-    },
-    {
-      bgImage:
-        "https://mfe-appearance.production.linktr.ee/images/selector-pebble-pink.71c34887a9c4ca41828c.png",
-      text: "Pebble Pink",
-    },
-    // ... add more themes
+
+    // Repeat for each instance as necessary...
   ];
+
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    window.location.href = "/login";
+  }
+
+  const userData = token ? jwtDecode(token) : {};
+
+  const userId = userData._id;
+
+  const changeTheme = (theme) => {
+    fetch(`http://localhost:9000/users/updateTheme`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+      },
+      body: JSON.stringify({
+        userId: userId,
+        theme: theme,
+      }),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.success === true) {
+          toast.success(res.message);
+        }
+      })
+      .catch(() => {});
+  };
 
   return (
     <div style={boxWrap}>
@@ -753,6 +725,7 @@ const ThemePanel = () => {
             <CustomThemeButton createOwn text={"custom"} />
             {themes.map((theme, index) => (
               <CustomThemeButton
+                onClick={() => changeTheme(theme.color)}
                 key={index}
                 bgImage={theme.bgImage}
                 text={theme.text}
@@ -765,9 +738,10 @@ const ThemePanel = () => {
   );
 };
 
-const CustomThemeButton = ({ bgImage, createOwn, text }) => {
+const CustomThemeButton = ({ bgImage, createOwn, text, onClick }) => {
   return (
     <button
+      onClick={onClick}
       style={{
         display: "flex",
         width: "100%",

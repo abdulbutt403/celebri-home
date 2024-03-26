@@ -25,9 +25,9 @@ const Login = () => {
     axios
       .post(`${baseUrl}/users/signin`, userData)
       .then((response) => {
+        console.log(response.data);
         const token = response.data.token;
         localStorage.setItem("token", token);
-
         setTimeout(() => {
           navigate("/admin/links");
         }, 1000);
@@ -36,6 +36,8 @@ const Login = () => {
         if (error.toString().includes("401")) {
           toast.error("Invalid Credentials");
         } else {
+          console.log(error.response.data.error);
+
           toast.error(error.toString());
         }
 

@@ -4,29 +4,53 @@ import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 import { baseUrl } from "../constants";
 
-const SelectPlan = ({ setPlan, setStep }) => {
-  const handleVipSelection = async () => {
-    setPlan("vip");
-    const stripe = await loadStripe("pk_test_51OooRcHLdlz3XbBpAQqsj9X48pkUwWDLp1eJEmrtCs9M3sUd8KClluGwF1UVcka2GTxEuPq6y7mDyH9KZ6rm6x4S00Hz7rb4BA");
-
-   const response = axios
-      .post(`${baseUrl}/users/create-payment`, {} , {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+const SelectPlan = ({ setPlan, setStep, UserDetails }) => {
+  const handleVipSelection = (type) => {
+    fetch(`http://localhost:9000/users/createCheckoutSession`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+      },
+      body: JSON.stringify({
+        id: UserDetails._id,
+        userName: UserDetails.userName,
+        userType: type,
+      }),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.success === true) {
+          window.location.href = res.url;
+        }
       })
- 
-      console.log(response)
-
-    setStep(4);
+      .catch(() => {});
   };
+  // const handleVipSelection = async (type) => {
+  //  const response = axios
+  //     .post(`${baseUrl}/users/createCheckoutSession` , {
+  //       headers: {
+  //         "content-type": "application/json",
+  //         accept: "application/json",
+
+  //     },
+  //       body:JSON.stringify({
+  //         "id": UserDetails._id ,
+  //         "userName": UserDetails.userName,
+  //         "userType": type
+  //       })
+  //     })
+
+  //     console.log(response)
+
+  //   // setStep();
+  // };
   return (
     <div className="pricing1">
       <div className="pricing-cards two">
         <div
-          onClick={() => {
-            setPlan("user");
-            setStep(4);
+          onClick={(e) => {
+            handleVipSelection("user");
           }}
         >
           <PricingCard
@@ -44,7 +68,7 @@ const SelectPlan = ({ setPlan, setStep }) => {
         `}
           />
         </div>
-        <div onClick={handleVipSelection}>
+        <div onClick={(e) => handleVipSelection("vip")}>
           <PricingCard
             tag={"Celebri VIP"}
             price={9.99}

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
+
 import Field from "../components/Common/Field";
 import useResponsive from "../Hooks/responsive";
 import { LogoFullIcon } from "../svgs";
@@ -7,14 +9,16 @@ import toast, { LoaderIcon } from "react-hot-toast";
 import axios from "axios";
 import { baseUrl } from "../constants";
 import { useNavigate } from "react-router-dom";
-import Pricings from "../components/Pricings";
 import SelectPlan from "../components/SelectPlan";
 
 const Signup = () => {
+  const { state } = useLocation();
+
   const isMobile = useResponsive();
   const [loading, setLoading] = useState(false);
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(state ? state.step : 1);
 
+  const [UserDetails, setUserDetails] = useState("");
   const [selected, setSelected] = useState("business");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,6 +28,7 @@ const Signup = () => {
 
   const nextStep = () => setStep((x) => x + 1);
   const navigate = useNavigate();
+
   const register = () => {
     setLoading(true);
     const userData = {
@@ -32,7 +37,7 @@ const Signup = () => {
       givenName,
       userName,
       profileCategory: selected,
-      plan
+      plan,
     };
 
     // Make a POST request to your sign-up API
@@ -40,8 +45,9 @@ const Signup = () => {
       .post(`${baseUrl}/users/signup`, userData)
       .then((response) => {
         toast.success("Registration successful");
-
-        setTimeout(() => navigate("/login"), 1000); // You can replace this with a redirect or other logic
+        setStep(4);
+        setUserDetails(response.data.user);
+        // setTimeout(() => navigate("/login"), 1000); // You can replace this with a redirect or other logic
       })
       .catch((error) => {
         alert("Registration failed"); // Handle the error appropriately
@@ -65,14 +71,15 @@ const Signup = () => {
               : step === 2
               ? "Enter Your Password"
               : step === 3
-              ? "Pick  a Plan" : "Tell us About Yourself"}
+              ? "Pick  a Plan"
+              : "Tell us About Yourself"}
           </h1>
           <p className="signup-tt">
             {step === 1 &&
               "Choose your CelebriLinks username. You can always change it later."}
             {step === 2 &&
               "Choose a strong password with at least 8 characters."}
-            {step === 4 && "For a personalized Celebrilinks experience"}
+            {step === 3 && "For a personalized Celebrilinks experience"}
           </p>
           {step === 1 && (
             <Field
@@ -99,22 +106,22 @@ const Signup = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           )}
+          {step === 4 && (
+            <SelectPlan
+              UserDetails={state?.userDetails ? state?.userDetails : UserDetails}
+              setPlan={setPlan}
+              setStep={setStep}
+            />
+          )}
+
           {step === 3 && (
-            <SelectPlan setPlan={setPlan} setStep={setStep}/>
+            <Field
+              type="text"
+              placeholder="Tell us your name"
+              value={givenName}
+              onChange={(e) => setGivenName(e.target.value)}
+            />
           )}
-
-{step === 4 && (
-        <Field
-        type="text"
-        placeholder="Tell us your name"
-        value={givenName}
-        onChange={(e) => setGivenName(e.target.value)}
-      />
-          )}
-
-
-
-          
 
           {step < 3 && (
             <p className="text-concrete text-sm" style={{ paddingTop: "2rem" }}>
@@ -125,10 +132,10 @@ const Signup = () => {
             </p>
           )}
 
-          {step === 4 && <br />}
-          {step === 4 && <br />}
+          {step === 3 && <br />}
+          {step === 3 && <br />}
 
-          {step === 4 && (
+          {step === 3 && (
             <span
               className="font-semibold"
               style={{ fontSize: 14.2, fontWeight: 600, opacity: 0.8 }}
@@ -137,7 +144,7 @@ const Signup = () => {
             </span>
           )}
 
-          {step === 4 && (
+          {step === 3 && (
             <div
               style={{
                 display: "flex",
@@ -293,7 +300,7 @@ const Signup = () => {
               Continue
             </button>
           )}
-          {step === 4 && (
+          {step === 3 && (
             <button
               style={loading ? { pointerEvents: "none" } : {}}
               className="login-page-btn"
@@ -316,10 +323,14 @@ const Signup = () => {
                 alignItems: "center",
                 justifyContent: "center",
                 marginTop: "2rem",
+                cursor: "pointer",
               }}
             >
               <p className="dd">
-                Already have an account? <a className="under">Log in</a>
+                Already have an account?{" "}
+                <a className="under" onClick={() => navigate("/login")}>
+                  Log in
+                </a>
               </p>
             </div>
           )}

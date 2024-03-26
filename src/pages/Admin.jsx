@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useState } from "react";
 import AdminHeader from "../components/Admin/Header";
 import ReactDevicePreview from "react-device-preview";
 import useResponsive from "../Hooks/responsive";
@@ -9,6 +9,7 @@ import jwtDecode from "jwt-decode";
 import toast, { LoaderIcon } from "react-hot-toast";
 import LinkEditor from "../components/LinkEditor";
 import { copyToClipboard } from "../utils";
+import { useNavigate } from "react-router-dom";
 
 const imageBox = {
   height: "22%",
@@ -44,7 +45,7 @@ const linksContainer = {
   marginTop: 30,
 };
 
-const {...linkButton} = {
+const { ...linkButton } = {
   width: "80%",
   height: 60,
   boxShadow: "rgba(10, 11, 13, 0.2) 0px 2px 4px 0px",
@@ -57,9 +58,13 @@ const {...linkButton} = {
   gap: 7,
 };
 
+let UserPlan;
+let UserLink;
+
 export default function Admin() {
   const [buttonPressed, setButtonPressed] = useState(false);
   const isMobile = useResponsive();
+  const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
 
@@ -69,13 +74,13 @@ export default function Admin() {
 
   const userData = token ? jwtDecode(token) : {};
   const [url, setUrl] = useState(null);
+  const [theme, setTheme] = useState(null);
   const [userName, setUserName] = useState(null);
   const [userLinks, setUserLinks] = useState([]);
 
   useEffect(() => {
     fetchUser();
   }, []);
-
   const fetchUser = async () => {
     try {
       const userId = userData._id;
@@ -83,8 +88,20 @@ export default function Admin() {
 
       // Set the user data in the state
       const user = response.data.user;
-
+      if (!user.hasPaid) {
+        toast.error("User has not paid.");
+        navigate("/signup", {
+          state: {
+            step: 4,
+            userDetails: user,
+          },
+        });
+      } else {
+      }
+      setTheme(user.theme);
+      UserPlan = user.plan;
       setUserName(user.userName);
+      UserLink = user.links;
       setUserLinks(user.links);
 
       if (user.profilePic) {
@@ -123,14 +140,16 @@ export default function Admin() {
                   style={{
                     width: "100%",
                     height: "100%",
-                    background: "#C2C2C2",
+                    background: `${`${theme ? theme : "#C2C2C2"}`}`,
                     paddingTop: 50,
+                    maxHeight: "100%", // or a specific pixel value like '500px'
+                    overflowY: "scroll",
                   }}
                 >
                   <div style={imageBox}>
                     {url ? (
                       <div style={imageWrap}>
-                        <img src={url} style={{ objectFit: "cover" }} />
+                        <img src={url} style={{ objectFit: "cover" }} alt="" />
                       </div>
                     ) : (
                       <div style={titleWrap}>
@@ -147,7 +166,7 @@ export default function Admin() {
                     {userLinks.map((link) => (
                       <button
                         key={link._id}
-                        style={{...linkButton, background: link.background}}
+                        style={{ ...linkButton, background: link.background }}
                         className="link-bt"
                         onClick={() => window.open(link.href)}
                       >
@@ -203,6 +222,7 @@ export default function Admin() {
             >
               {userLinks.map((link) => (
                 <LinkEditor
+                  link={link}
                   key={link._id}
                   titleProp={link.title}
                   urlProp={link.href}
@@ -210,6 +230,7 @@ export default function Admin() {
                   idProp={link._id}
                   backgroundProp={link.background}
                   fetchData={fetchUser}
+                  UserPlan={UserPlan}
                 />
               ))}
             </div>
@@ -283,6 +304,10 @@ const AddLinkButton = ({ setButtonPressed }) => {
       onClick={() => setButtonPressed((x) => !x)}
     >
       <button
+        disabled={
+          (UserPlan === "user" && UserLink.length === 5) ||
+          (UserPlan === "vip" && UserLink.length === 50)
+        }
         style={{
           position: "relative",
           transition: "all 0.75s ease-out",

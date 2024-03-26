@@ -23,19 +23,22 @@ export default function LinkEditor({
   titleProp,
   urlProp,
   iconProp,
+  link,
   idProp,
+  key,
   fetchData,
+  UserPlan,
   backgroundProp,
 }) {
   const [title, setTitle] = useState(titleProp);
   const [url, setUrl] = useState(urlProp);
   const [choosed, setChoosed] = useState(false);
   const [removed, setRemoved] = useState(false);
+  const [fav, setFav] = useState(link?.star ? link?.star : false);
   const [selectedImage, setSelectedImage] = useState(
     iconProp ? `${baseUrl}/uploads/${iconProp}` : null
   );
   const [selection, setSelection] = useState(null);
-
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -71,6 +74,7 @@ export default function LinkEditor({
   const [editTitle, setEditTitle] = useState(false);
   const [editUrl, setEditUrl] = useState(false);
 
+  const addFav = (link, index) => {};
   const handleDeleteLink = async () => {
     try {
       const response = await axios.post(
@@ -91,19 +95,53 @@ export default function LinkEditor({
   const [color, setColor] = useState(backgroundProp);
   const [show, setShow] = useState(false);
 
+  const handleUpdateStar = async (fav, key) => {
+    try {
+      const formData = new FormData();
+      formData.append("href", url);
+      formData.append("title", title);
+      formData.append("background", color);
+      formData.append("star", fav);
+
+      // Check if selectedImage is a valid File object
+      if (selection instanceof File) {
+        formData.append("icon", selection);
+      } else {
+        if (removed) formData.append("noIcon", true);
+      }
+
+      const response = await axios.post(
+        `${baseUrl}/users/${userId}/links/${idProp}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log(response);
+
+      fetchData();
+
+      toast.success("Add Favorite successfully");
+    } catch (error) {
+      toast.error(error.toString());
+    }
+  };
   const handleUpdateLink = async () => {
     try {
       const formData = new FormData();
       formData.append("href", url);
       formData.append("title", title);
       formData.append("background", color);
+      formData.append("star", fav);
 
       // Check if selectedImage is a valid File object
       if (selection instanceof File) {
         formData.append("icon", selection);
       } else {
-        if(removed)
-        formData.append("noIcon", true);
+        if (removed) formData.append("noIcon", true);
       }
 
       const response = await axios.post(
@@ -148,10 +186,16 @@ export default function LinkEditor({
           <div className="w-full pr-3">
             <div>
               <div className="grid mb-1 w-full grid-cols-[minmax(0,_90%)] items-baseline">
-            
                 {editTitle && (
                   <div className="row-start-1 col-start-1 flex">
-                      <div style={{height: 10, width: 10, border: '1px solid black', background: color}}></div>
+                    <div
+                      style={{
+                        height: 10,
+                        width: 10,
+                        border: "1px solid black",
+                        background: color,
+                      }}
+                    ></div>
                     <input
                       type="text"
                       className="w-full h-5 text-sm border-none p-0 m-0 outline-none  font-semibold "
@@ -173,7 +217,16 @@ export default function LinkEditor({
                 )}
                 {!editTitle && (
                   <div className="row-start-1 col-start-1 inline-flex">
-                      <div style={{height: 13, width: 13, border: '1px solid rgba(0,0,0,0.5)', marginRight: 10,transform: 'translateY(3.8px)',  background: color}}></div>
+                    <div
+                      style={{
+                        height: 13,
+                        width: 13,
+                        border: "1px solid rgba(0,0,0,0.5)",
+                        marginRight: 10,
+                        transform: "translateY(3.8px)",
+                        background: color,
+                      }}
+                    ></div>
                     <button
                       type="button"
                       className="flex items-center max-w-full rounded-[2px] outline-offset-2 outline-2 focus-visible:outline"
@@ -253,12 +306,15 @@ export default function LinkEditor({
           }}
         >
           <div style={{ display: "flex", gap: 20, marginTop: 20 }}>
-            {!selectedImage && (
+            {!selectedImage && UserPlan !== "user" && (
               <Tippy content={<span>Attach Icon</span>}>
                 <button
                   type="button"
-                  style={{ ...btn, position: "relative", transform: 'translateY(-5px)' }}
-            
+                  style={{
+                    ...btn,
+                    position: "relative",
+                    transform: "translateY(-5px)",
+                  }}
                 >
                   <input
                     type="file"
@@ -267,12 +323,11 @@ export default function LinkEditor({
                       width: "100%",
                       left: 0,
                       opacity: "0",
-                      
                     }}
                     accept=".png" // Allow only PNG files
                     onChange={handleFileChange}
                   />
-                  <CustomIcon3/>
+                  <CustomIcon3 />
                 </button>
               </Tippy>
             )}
@@ -284,7 +339,7 @@ export default function LinkEditor({
                   onClick={() => {
                     setSelectedImage(null);
                     setSelection(null);
-                    setRemoved(true)
+                    setRemoved(true);
                   }}
                 >
                   <i
@@ -318,8 +373,29 @@ export default function LinkEditor({
               </button>
             </Tippy>
 
-            <StarIcon />
-            <SimpleIcon />
+            {UserPlan !== "user" && link.star && (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                style={{ cursor: "pointer" }}
+                onClick={() => handleUpdateStar(false)}
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-star-fill"
+                viewBox="0 0 16 16"
+              >
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+              </svg>
+            )}
+            {UserPlan !== "user" && !link.star && (
+              <div
+                style={{ cursor: "pointer" }}
+                onClick={() => handleUpdateStar(true, key)}
+              >
+                <StarIcon />
+              </div>
+            )}
+            {/* <SimpleIcon /> */}
             <LockIcon />
             <AnalyticalIcon />
           </div>
