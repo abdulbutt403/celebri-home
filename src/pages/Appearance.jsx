@@ -725,7 +725,7 @@ const ThemePanel = () => {
             <CustomThemeButton createOwn text={"custom"} />
             {themes.map((theme, index) => (
               <CustomThemeButton
-                onClick={userData.role === 'user' ? null : () => changeTheme(theme.color)}
+                onClick={() => changeTheme(theme.color)}
                 key={index}
                 bgImage={theme.bgImage}
                 text={theme.text}
