@@ -6,7 +6,8 @@
 }
 
 .blog-card {
-  width: calc(33.33% - 40px); /* 33.33% width for each card with 20px margin on both sides */
+  width: calc(33.33% - 40px); 
+  min-width: 300px;/* 33.33% width for each card with 20px margin on both sides */
   margin: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;

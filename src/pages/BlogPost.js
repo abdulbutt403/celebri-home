@@ -11,12 +11,12 @@ const BlogPost = () => {
   const sanitizedHTML = DOMPurify.sanitize(blogPostBody);
 
   const cardStyle = {
-    width: "85%",
-    margin: "12px auto 50px auto",
+    width: "80%",
+    margin: 'auto',
     borderRadius: "12px",
-    padding: "12px",
-    display: "flex",
-    boxShadow: "0px 0px 20px 0px rgba(0, 0, 0, 0.2)", // Bolder and clearer shadow effect
+    paddingBottom: "120px",
+    
+    display: "flex",// Bolder and clearer shadow effect
   };
   const imgStyle = {
     width: "100%",
@@ -41,7 +41,6 @@ const BlogPost = () => {
           <h6>Word By Zack Islam</h6>
         </p>
         <div style={cardStyle}>
-          <div style={{ width: "100%" }}></div>
 
           <div dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
         </div>
