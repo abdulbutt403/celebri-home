@@ -10,6 +10,18 @@ import toast, { LoaderIcon } from "react-hot-toast";
 import LinkEditor from "../components/LinkEditor";
 import { copyToClipboard } from "../utils";
 import { useNavigate } from "react-router-dom";
+import { MdOndemandVideo } from "react-icons/md";
+import VideoModal from "./videoModal";
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
 
 const imageBox = {
   height: "22%",
@@ -65,6 +77,7 @@ export default function Admin() {
   const [buttonPressed, setButtonPressed] = useState(false);
   const isMobile = useResponsive();
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   const token = localStorage.getItem("token");
 
@@ -77,6 +90,10 @@ export default function Admin() {
   const [theme, setTheme] = useState(null);
   const [userName, setUserName] = useState(null);
   const [userLinks, setUserLinks] = useState([]);
+  const [showVideo, setShowVideo] = useState(false);
+  const [seletedideo, setSeletedideo] = useState([]);
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  
 
   useEffect(() => {
     fetchUser();
@@ -88,16 +105,18 @@ export default function Admin() {
 
       // Set the user data in the state
       const user = response.data.user;
-      if (!user.hasPaid) {
-        toast.error("User has not paid.");
-        navigate("/signup", {
-          state: {
-            step: 4,
-            userDetails: user,
-          },
-        });
-      } else {
-      }
+      console.log("user", user)
+      // if (user?.isInFreeTrial && user?.isInFreeTrial?.freeTrial) {
+      // } else if (!user.hasPaid) {
+      //   toast.error("User has not paid.");
+      //   navigate("/signup", {
+      //     state: {
+      //       step: 4,
+      //       userDetails: user,
+      //     },
+      //   });
+      // } else {
+      // }
       setTheme(user.theme);
       UserPlan = user.plan;
       setUserName(user.userName);
@@ -105,12 +124,21 @@ export default function Admin() {
       setUserLinks(user.links);
 
       if (user.profilePic) {
-        setUrl(`${baseUrl}/uploads/${user.profilePic}`);
+        setUrl(`${user?.profilePic}`);
       }
     } catch (error) {
       console.error(error);
       // Handle errors appropriately
     }
+  };
+
+  const openModal = (e) => {
+    e.preventDefault();
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -148,12 +176,20 @@ export default function Admin() {
                 >
                   <div style={imageBox}>
                     {url ? (
-                      <div style={imageWrap}>
-                        <img src={url} style={{ objectFit: "cover" }} alt="" />
-                      </div>
+                      // <div style={imageWrap}>
+                      <img
+                        src={url}
+                        style={{
+                          height: "100px",
+                          width: "120px",
+                          borderRadius: "100%",
+                        }}
+                        alt=""
+                      />
                     ) : (
+                      // </div>
                       <div style={titleWrap}>
-                        <p style={{ color: "#fff", fontSize: 40 }}>A</p>
+                        <p style={{ color: "#fff", fontSize: 40 }}>{userData?.userData?.givenName.charAt(0).toUpperCase()}</p>
                       </div>
                     )}
                     <h5
@@ -164,34 +200,73 @@ export default function Admin() {
                   </div>
                   <div style={linksContainer}>
                     {userLinks.map((link) => (
-                      <button
-                        key={link._id}
-                        style={{ ...linkButton, background: link.background }}
-                        className="link-bt"
-                        onClick={() => window.open(link.href)}
-                      >
-                        {link.icon && (
-                          <div
-                            style={{
-                              width: 28,
-                              height: 28,
-                              overflow: "hidden",
-                            }}
-                          >
-                            <img
-                              className="button-image"
-                              src={`${baseUrl}/uploads/${link.icon}`}
-                              alt={link.title}
-                            />
-                          </div>
-                        )}
-                        {link.title || "No Title added"}
-                      </button>
+                      <>
+                        <button
+                          key={link._id}
+                          style={{ ...linkButton, background: link.background }}
+                          className="link-bt"
+                          onClick={() => window.open(link.href)}
+                        >
+                          {link.icon && (
+                            <div
+                              style={{
+                                width: 50,
+                                overflow: "hidden",
+                              }}
+                            >
+                              <img
+                                className="button-image"
+                                src={`${link.icon}`}
+                                alt={link.title}
+                              />
+                            </div>
+                          )}
+                          {link.video && (
+                            <>
+                              <div
+                                style={{
+                                  width: 28,
+                                  height: 28,
+                                  overflow: "hidden",
+                                }}
+                              >
+                                <MdOndemandVideo
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setSeletedideo(link.video);
+                                    openModal(e);
+                                  }}
+                                  // onMouseEnter={() => setShowVideo(true)}
+                                  // onMouseLeave={() => setShowVideo(false)}
+                                  style={{
+                                    cursor: "pointer",
+                                    width: "30px",
+                                    height: "30px",
+                                  }}
+                                />
+                                <div></div>
+                              </div>
+                            </>
+                          )}
+                          {link.title || "No Title added"}
+                        </button>
+                        {showVideo ? (
+                          <iframe
+                            width="560"
+                            height="315"
+                            src={link.video}
+                            frameBorder="0"
+                            allow="autoplay; encrypted-media"
+                            allowFullScreen
+                          ></iframe>
+                        ) : null}
+                      </>
                     ))}
                   </div>
                 </div>
               </ReactDevicePreview>
             </div>
+            <div></div>
           </div>
           <div
             style={{
@@ -237,6 +312,11 @@ export default function Admin() {
           </div>
         </div>
       </main>
+      <VideoModal
+        isModalOpen={isModalOpen}
+        onClose={closeModal}
+        VideoLink={seletedideo}
+      />
     </div>
   );
 }

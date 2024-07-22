@@ -23,8 +23,9 @@ export default function PricingCard({ tag, price, btnText, extraTag, badge, html
 
         {extraTag && <h3 className="pick-plan-heading">{extraTag}</h3>}
         <div className="pricing-tag-value">
-          {!badge && <h3 className="pick-plan-heading">${price}</h3>}
-          {!badge && <p className="pricing-tag-currency"> USD/monthly</p>}
+          {!badge && price != 0  && <h3 className="pick-plan-heading">${price}</h3>}
+          {!badge && price == 0  && <h3 className="pick-plan-heading">{'  '} <br/></h3>}
+          {!badge && price != 0 && <p className="pricing-tag-currency"> USD/monthly</p>}
           {badge && (
             <p className="pricing-tag-currency">
               ${price} USD per month after, billed monthly

@@ -71,7 +71,7 @@ export default function ShareProfile() {
     fetchUser();
     updateProfileViews();
   }, []);
-
+  
   const updateProfileViews = async () => {
     try {
       const userId = params.id;
@@ -94,7 +94,7 @@ export default function ShareProfile() {
       setUserLinks(user.links);
 
       if (user.profilePic) {
-        setUrl(`${baseUrl}/uploads/${user.profilePic}`);
+        setUrl(`${user?.profilePic}`);
       }
     } catch (error) {
       console.error(error);
@@ -170,7 +170,7 @@ export default function ShareProfile() {
                         >
                           <img
                             className="button-image"
-                            src={`${baseUrl}/uploads/${link.icon}`}
+                            src={`${link?.icon}`}
                             alt={link.title}
                           />
                         </div>
@@ -184,6 +184,7 @@ export default function ShareProfile() {
           </div>
         </div>
       </main>
+      
     </div>
   );
 }

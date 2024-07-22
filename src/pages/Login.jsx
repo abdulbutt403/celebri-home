@@ -15,6 +15,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const handleLogin = () => {
+    console.log('login')
     setLoading(true);
     // Prepare the data to send in the request body
     const userData = {
@@ -28,20 +29,58 @@ const Login = () => {
         console.log(response.data);
         const token = response.data.token;
         localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(response?.data?.updatedUser));
+
         setTimeout(() => {
           navigate("/admin/links");
         }, 1000);
       })
       .catch((error) => {
-        if (error.toString().includes("401")) {
-          toast.error("Invalid Credentials");
-        } else {
-          console.log(error.response.data.error);
+        console.log("errrrrr", error)
+        // eslint-disable-next-line no-cond-assign
+        // if (error.respomse.data.statusCode = 401) {
+        //   toast.error(error.respomse.data.error);
+        // // eslint-disable-next-line no-cond-assign
+        // } else if(error.respomse.data.statusCode = 404) {
+        //   toast.error(error.response.data.error);
+        //   navigate("/signup", {
+        //     state: {
+        //       step: 4,
+        //       // userDetails: user,
+        //     },
+        //   });
+        // } else (error.respomse.data.statusCode = 404) {
+        //   toast.error(error.response.data.error);
+        //   navigate("/signup", {
+        //     state: {
+        //       step: 4,
+        //       // userDetails: user,
+        //     },
+        //   });
+        // }
 
-          toast.error(error.toString());
+        if (error.response.data.statusCode === 401) {
+          toast.error(error.response.data.error);
+        } else if (error.response.data.statusCode === 400) {
+          toast.error(error.response.data.error);
+          navigate("/signup", {
+            state: {
+              step: 4,
+            },
+          });
+        } else if (error.response.data.statusCode === 404) {
+          toast.error(error.response.data.error);
+          navigate("/signup", {
+            state: {
+              step: 1,
+              // userDetails: user,
+            },
+          });
+        } else {
+          toast.error(error.response.data.error);
         }
 
-        console.error(error);
+        // console.error(error);
         setLoading(false);
       });
   };
@@ -51,7 +90,7 @@ const Login = () => {
       <div className="logo-wrap">
         <a>
           <LogoFullIcon />
-        </a>
+        </a>  
       </div>
       <main className="login-main">
         <div className="login-form-wrap">

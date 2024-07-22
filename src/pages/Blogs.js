@@ -15,7 +15,7 @@ export default function Blogs() {
 
   const getAllUser = () => {
     setLoading(true);
-    fetch(`http://localhost:9000/users/allBlogs`, {
+    fetch(`https://celebri-backend.onrender.com/users/allBlogs`, {
       method: "GET",
       headers: {
         "content-type": "application/json",
@@ -73,7 +73,7 @@ export default function Blogs() {
               return (
                 <Blog
                   onClick={() => handleBlogClick(blog?._id, ind)}
-                  image={`http://localhost:9000/uploads/${blog.imagePath}`}
+                  image={`${blog.imagePath}`}
                   type={blog?.type}
                   title={blog?.title}
                   undefined

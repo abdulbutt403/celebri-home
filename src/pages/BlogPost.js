@@ -11,11 +11,12 @@ const BlogPost = () => {
   const sanitizedHTML = DOMPurify.sanitize(blogPostBody);
 
   const cardStyle = {
+    textAlign: "justify",
     width: "80%",
     margin: 'auto',
     borderRadius: "12px",
     paddingBottom: "120px",
-    
+
     display: "flex",// Bolder and clearer shadow effect
   };
   const imgStyle = {
@@ -28,11 +29,11 @@ const BlogPost = () => {
       <Navbar />
       <div>
         <img
-          src={`http://localhost:9000/uploads/${state.blogPostData.imagePath}`}
+          src={`${state.blogPostData.imagePath}`}
           style={imgStyle}
           alt=""
         ></img>
-        <h1 className="user-heading" style={{ margin: "26px 100px" }}>
+        <h1 className="user-heading" style={{ textAlign: "justify", margin: "26px 100px" }}>
           <span>{state.blogPostData.title}</span>
         </h1>
         <p

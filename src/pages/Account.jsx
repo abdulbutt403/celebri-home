@@ -165,7 +165,7 @@ const Security = () => {
 const TreeComponent = () => {
 
   const isMobile = useResponsive();
-
+const[User,setUser]=useState(JSON.parse(localStorage.getItem('user')))
   return (
     <div className="tree active primary sc-eGCarw zAeKe" data-tree="64078753">
       <div style={{ display: "flex" , flexDirection : isMobile ? 'column': 'row' }}>
@@ -178,14 +178,15 @@ const TreeComponent = () => {
               data-theme-key="custom"
             >
               <div className="sc-bdfBwQ sc-dQppl dRQKnM jBEgpy">
-                <span
+                {/* <span
                   font-family="Inter"
                   font-weight="600"
                   font-size="18px"
                   className="sc-bqyKva bpcatB"
                 >
                   H
-                </span>
+                </span> */}
+                <img src={User.profilePic ? User.profilePic : ''}/>
               </div>
             </div>
           </span>

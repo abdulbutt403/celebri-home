@@ -18,7 +18,7 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(state ? state.step : 1);
 
-  const [UserDetails, setUserDetails] = useState("");
+  const [UserDetails, setUserDetails] = useState({});
   const [selected, setSelected] = useState("business");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,7 +29,8 @@ const Signup = () => {
   const nextStep = () => setStep((x) => x + 1);
   const navigate = useNavigate();
 
-  const register = () => {
+ 
+  const register = (e) => {
     setLoading(true);
     const userData = {
       email,
@@ -40,22 +41,46 @@ const Signup = () => {
       plan,
     };
 
-    // Make a POST request to your sign-up API
-    axios
-      .post(`${baseUrl}/users/signup`, userData)
-      .then((response) => {
-        toast.success("Registration successful");
-        setStep(4);
-        setUserDetails(response.data.user);
-        // setTimeout(() => navigate("/login"), 1000); // You can replace this with a redirect or other logic
+    fetch(`${baseUrl}/users/signup`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+      },
+      body: JSON.stringify(userData),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        
+console.log(res)
+if(res?.statuCode == 400){
+  toast.error(res?.message)
+  setLoading(false);
+  setTimeout(() => navigate("/login"), 1000);
+
+  return
+}
+          toast.success("Registration successful");
+    
+          // Update UI state
+          setStep(4);
+          setUserDetails(res.user);
+          
+          // Store user details and token in localStorage
+          localStorage.setItem("user", JSON.stringify(res.user));
+          localStorage.setItem("token", res.token);
+    
+          // Redirect after a delay
+     
+  
+        setLoading(false);
+
       })
       .catch((error) => {
         alert("Registration failed"); // Handle the error appropriately
         toast.error(error);
         setLoading(false);
-      });
-  };
-
+      });}
   return (
     <div className="login-wrap">
       <div className="logo-wrap">
@@ -64,7 +89,7 @@ const Signup = () => {
         </a>
       </div>
       <main className="login-main" style={{ marginTop: 40 }}>
-        <div className="login-form-wrap">
+        <div className={step === 4 ? "" : "login-form-wrap"}>
           <h1 className="login-heading" style={{ letterSpacing: "-2.5px" }}>
             {step === 1
               ? "Create your account"
@@ -290,7 +315,7 @@ const Signup = () => {
             <button
               className="login-page-btn"
               onClick={() => {
-                if (password.length < 6) {
+                if (password?.length < 6) {
                   toast.error("Enter atleast 6 characters password");
                   return;
                 }
@@ -356,7 +381,7 @@ const Signup = () => {
           )}
         </div>
       </main>
-      <div className="bg-chalk-2"></div>
+   {!isMobile &&  <div className="bg-chalk-2"></div>}
     </div>
   );
 };

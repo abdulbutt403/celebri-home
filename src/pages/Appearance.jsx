@@ -70,6 +70,7 @@ export default function Appearance() {
 
 const AddLinkPanel = () => {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [profilePic, setProfilePic] = useState(null); // Added state for profilePic
   const token = localStorage.getItem("token");
   const userData = jwtDecode(token);
   const [url, setUrl] = useState(null);
@@ -90,11 +91,13 @@ const AddLinkPanel = () => {
 
       // Set the user data in the state
       const user = response.data.user;
+      console.log("selectedImage", user);
       setGivenName(user.givenName);
       setBio(user.bio);
       if (user.profilePic) {
-        setUrl(`${baseUrl}/uploads/${user.profilePic}`);
+        setUrl(`${user?.profilePic}`);
         setSelectedImage("temp");
+        setProfilePic(user.profilePic); // Initialize profilePic state
       }
     } catch (error) {
       console.error(error);
@@ -110,9 +113,17 @@ const AddLinkPanel = () => {
       formData.append("givenName", givenName);
       formData.append("userId", userData._id);
       formData.append("bio", bio);
+      let noProfile = false;
       // Check if selectedImage is a valid File object
       if (selectedImage instanceof File) {
         formData.append("profilePicture", selectedImage);
+      } else if (!selectedImage) {
+        formData.append("profilePicture", ""); // Send empty value if no image
+        noProfile = true;
+      }
+
+      if (noProfile) {
+        formData.append("noProfile", true);
       }
 
       // Make a POST request to the edit profile API
@@ -157,7 +168,7 @@ const AddLinkPanel = () => {
                       height: isMobile ? 80 : 96,
                       width: 96,
                       marginRight: 43,
-                      objectFit: "cover",
+                      // objectFit: "cover",
                       borderRadius: "100%",
                     }}
                   />
@@ -176,7 +187,9 @@ const AddLinkPanel = () => {
                     borderRadius: "100%",
                   }}
                 >
-                  <span className="text-white">H</span>
+                  <span className="text-white">
+                    {givenName?.charAt(0).toUpperCase()}
+                  </span>
                 </div>
               )}
 
@@ -184,11 +197,13 @@ const AddLinkPanel = () => {
                 <PickImageButton
                   setSelectedImage={setSelectedImage}
                   setUrl={setUrl}
+                  setProfilePic={setProfilePic} // Pass setProfilePic to PickImageButton
                 />
                 <RemoveButton
                   selectedImage={selectedImage}
                   setSelectedImage={setSelectedImage}
                   setUrl={setUrl}
+                  setProfilePic={setProfilePic} // Pass setProfilePic to RemoveButton
                 />
               </div>
             </div>
@@ -245,13 +260,14 @@ const AddLinkPanel = () => {
   );
 };
 
-const PickImageButton = ({ setSelectedImage, setUrl }) => {
+const PickImageButton = ({ setSelectedImage, setUrl, setProfilePic }) => {
   const [inputKey, setInputKey] = useState(Date.now());
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setSelectedImage(file);
+      setProfilePic(file); // Set profilePic to the selected file
 
       // Display the selected image as a preview
       const reader = new FileReader();
@@ -299,7 +315,7 @@ const PickImageButton = ({ setSelectedImage, setUrl }) => {
   );
 };
 
-const RemoveButton = ({ selectedImage, setSelectedImage, setUrl }) => {
+const RemoveButton = ({ selectedImage, setSelectedImage, setUrl, setProfilePic }) => {
   return (
     <button
       style={{
@@ -314,6 +330,7 @@ const RemoveButton = ({ selectedImage, setSelectedImage, setUrl }) => {
       onClick={() => {
         setSelectedImage(null);
         setUrl(null);
+        setProfilePic(""); // Set profilePic to empty string when removed
       }}
     >
       <span className="flex items-center justify-center">
@@ -550,7 +567,7 @@ const Banner = () => {
               style={{ borderRadius: "9999px", overflow: "hidden" }}
             >
               <div className="w-full">
-                <button
+                {/* <button
                   className="relative transition duration-75 ease-out w-full h-2xl px-md rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-black antialiased bg-primary text-white !bg-forest font-semibold !text-chartreuse hover:!bg-forest/80 hover:bg-primary-alt active:bg-primary-alt"
                   type="button"
                   style={{
@@ -567,8 +584,8 @@ const Banner = () => {
                     transition: "all 0.3s ease-out",
                     cursor: "pointer",
                   }}
-                >
-                  <span className="flex items-center justify-center">
+                > */}
+                {/* <span className="flex items-center justify-center">
                     <span className="block pr-xs">
                       <TryFreeIcon />
                     </span>
@@ -578,8 +595,8 @@ const Banner = () => {
                     >
                       Try Pro for free
                     </span>
-                  </span>
-                </button>
+                  </span> */}
+                {/* </button> */}
               </div>
             </span>
             <p
@@ -690,7 +707,7 @@ const ThemePanel = () => {
   const userId = userData._id;
 
   const changeTheme = (theme) => {
-    fetch(`http://localhost:9000/users/updateTheme`, {
+    fetch(`${baseUrl}/users/updateTheme`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -706,7 +723,7 @@ const ThemePanel = () => {
         if (res.success === true) {
           toast.success(res.message);
         }
-        toast.error(res.error)
+        toast.error(res.error);
       })
       .catch(() => {});
   };

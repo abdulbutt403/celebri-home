@@ -11,7 +11,10 @@ import {
   MoveIcon,
   SimpleIcon,
   StarIcon,
+  IconVideo,
 } from "../svgs";
+import { MdOndemandVideo } from "react-icons/md";
+
 import jwtDecode from "jwt-decode";
 import { baseUrl } from "../constants";
 import axios from "axios";
@@ -36,8 +39,10 @@ export default function LinkEditor({
   const [removed, setRemoved] = useState(false);
   const [fav, setFav] = useState(link?.star ? link?.star : false);
   const [selectedImage, setSelectedImage] = useState(
-    iconProp ? `${baseUrl}/uploads/${iconProp}` : null
+    iconProp ? `${iconProp}` : null
   );
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [selectionVideo, setSelectionVideo] = useState(null);
   const [selection, setSelection] = useState(null);
 
   const handleFileChange = (event) => {
@@ -59,6 +64,28 @@ export default function LinkEditor({
       // Clear the selected image if the file is not a PNG
       setSelectedImage(null);
       alert("Please select a valid PNG image.");
+    }
+  };
+  const handleVideoFileChange = (event) => {
+    debugger;
+    const file = event.target.files[0];
+
+    // Check if a file is selected and it is a PNG file
+    if (file && file.type === "video/mp4") {
+      setChoosed(true);
+      setSelectionVideo(file);
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        // Set the selected image and update the state
+        setSelectedVideo(e.target.result);
+      };
+
+      reader.readAsDataURL(file);
+    } else {
+      // Clear the selected image if the file is not a PNG
+      setSelectedVideo(null);
+      alert("Please select a valid video file.");
     }
   };
 
@@ -96,6 +123,7 @@ export default function LinkEditor({
   const [show, setShow] = useState(false);
 
   const handleUpdateStar = async (fav, key) => {
+    console.log("title");
     try {
       const formData = new FormData();
       formData.append("href", url);
@@ -144,6 +172,11 @@ export default function LinkEditor({
         if (removed) formData.append("noIcon", true);
       }
 
+      if (selectionVideo instanceof File) {
+        formData.append("video", selectionVideo);
+      } else {
+        if (removed) formData.append("noIcon", true);
+      }
       const response = await axios.post(
         `${baseUrl}/users/${userId}/links/${idProp}`,
         formData,
@@ -179,6 +212,21 @@ export default function LinkEditor({
             alt="Selected"
             style={{ width: "60px", objectFit: "cover" }}
           />
+        </div>
+      )}
+      {selectedVideo && (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            width: "100px",
+            height: "137px",
+          }}
+        >
+    
+          <video>
+            <source src={selectedVideo} type="video/mp4" />
+          </video>
         </div>
       )}
       <div className="flex-1 p-lg h-full relative">
@@ -394,6 +442,57 @@ export default function LinkEditor({
               >
                 <StarIcon />
               </div>
+            )}
+            {!selectedVideo && UserPlan !== "user" && (
+              <Tippy content={<span>Attach Video</span>}>
+                <button
+                  type="button"
+                  style={{
+                    ...btn,
+                    position: "relative",
+                    transform: "translateY(-5px)",
+                  }}
+                >
+                  <input
+                    type="file"
+                    style={{
+                      position: "absolute",
+                      width: "100%",
+                      left: 0,
+                      opacity: "0",
+                    }}
+                    accept=".video/mp4" // Allow only PNG files
+                    onChange={handleVideoFileChange}
+                  />
+                  <MdOndemandVideo
+                    style={{ cursor: "pointer", width: "15px", height: "15px" }}
+                  />
+                </button>
+              </Tippy>
+            )}
+
+            {selectedVideo && (
+              <Tippy content={<span>Remove Video</span>}>
+                <button
+                  type="button"
+                  style={{ ...btn, position: "relative" }}
+                  onClick={() => {
+                    setSelectedVideo(null);
+                    setSelectionVideo(null);
+                    setRemoved(true);
+                  }}
+                >
+                  <i
+                    className="fa fa-times"
+                    style={{
+                      fontSize: 24,
+                      fontWeight: "300",
+                      color: "red",
+                      transform: "translateY(-5px)",
+                    }}
+                  />
+                </button>
+              </Tippy>
             )}
             {/* <SimpleIcon /> */}
             <LockIcon />

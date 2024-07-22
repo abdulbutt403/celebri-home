@@ -1,13 +1,12 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
 
 button {
   cursor: pointer;
@@ -48,7 +47,7 @@ button {
   align-items: center;
 }
 
-.list-left>div {
+.list-left > div {
   white-space: nowrap;
   font-size: 15px;
   line-height: 1.5;
@@ -58,7 +57,7 @@ button {
   text-shadow: rgba(0, 0, 0, 0.01) 0px 0px 1px;
 }
 
-.list-left>div:hover {
+.list-left > div:hover {
   background-color: rgb(239, 240, 236);
   cursor: pointer;
 }
@@ -83,7 +82,6 @@ button {
   background-color: rgb(239, 240, 236);
   border-radius: 8px;
   padding: 18px 26px 20px;
-
 }
 
 .signup-btn {
@@ -105,16 +103,13 @@ button {
 /********* HERO 1 ***********/
 
 .home-page .hero1 {
-
   background-color: rgb(233, 192, 233);
   height: 100vh;
   display: flex;
   align-items: center;
   padding-left: 46px;
-  gap: 5%
+  gap: 5%;
 }
-
-
 
 .hero-heading {
   font-family: "Link Sans", "Arial Black", Arial, sans-serif;
@@ -146,7 +141,6 @@ button {
   justify-content: flex-start;
 }
 
-
 .hero-form {
   display: flex;
   flex-wrap: wrap;
@@ -154,7 +148,6 @@ button {
   align-items: flex-start;
   justify-content: flex-start;
 }
-
 
 .hero-input {
   background: rgb(255, 255, 255);
@@ -169,7 +162,6 @@ button {
   border-radius: 8px;
 }
 
-
 .hero-input p {
   color: rgb(103, 107, 95);
 }
@@ -182,7 +174,7 @@ button {
   line-height: 1.5;
 }
 
-.input-text~.outline {
+.input-text ~ .outline {
   content: "";
   display: block;
   position: absolute;
@@ -192,7 +184,7 @@ button {
   pointer-events: none;
 }
 
-.input-text:focus~.outline {
+.input-text:focus ~ .outline {
   visibility: visible;
   inset: -4px;
   transition: all 0.1s cubic-bezier(0.33, 1.69, 0.87, 1.07) 0s;
@@ -271,24 +263,21 @@ button {
   transform: translateY(8%);
 }
 
-
 .home-page .hero2 {
   background-color: rgb(233, 192, 233);
   height: 120vh;
   display: flex;
+
   align-items: center;
   padding-left: 66px;
-  gap: 5%
+  gap: 5%;
 }
-
-
-
-
 
 .hero-heading-2 {
   font-family: "Link Sans", "Arial Black", Arial, sans-serif;
   font-size: clamp(28px, 8vmin, 56px);
   font-weight: 820;
+  margin-top: 2;
   letter-spacing: -0.02em;
   line-height: 1.05;
   text-align: left;
@@ -343,14 +332,13 @@ button {
   color: rgb(255, 255, 255);
 }
 
-
 .home-page .hero3 {
   background-color: rgb(120, 0, 22);
   height: 100vh;
   display: flex;
   align-items: center;
   padding-left: 30px;
-  gap: 5%
+  gap: 5%;
 }
 
 .hero-heading-3 {
@@ -363,7 +351,6 @@ button {
   color: rgb(233, 192, 233);
 }
 
-
 .hero-text-3 {
   font-family: "Link Sans", Arial, sans-serif;
   font-size: clamp(18px, 2vmin, 20px);
@@ -375,14 +362,13 @@ button {
   margin-top: 24px;
 }
 
-
 .home-page .hero4 {
   background-color: rgb(243, 243, 241);
   height: 100vh;
   display: flex;
   align-items: center;
   padding-left: 30px;
-  gap: 3.5%
+  gap: 3.5%;
 }
 
 .hero4-bg {
@@ -390,7 +376,6 @@ button {
   object-fit: contain;
   transform: translateY(8%);
 }
-
 
 .hero-heading-4 {
   font-family: "Link Sans", "Arial Black", Arial, sans-serif;
@@ -401,7 +386,6 @@ button {
   text-align: left;
   color: rgb(30, 35, 48);
 }
-
 .hero-text-4 {
   font-family: "Link Sans", Arial, sans-serif;
   font-size: clamp(18px, 2vmin, 20px);
@@ -421,7 +405,6 @@ button {
 }
 
 .footer h1 {
-
   font-family: "Link Sans", "Arial Black", Arial, sans-serif;
   font-size: 52px;
   font-weight: 800;
@@ -429,7 +412,6 @@ button {
   line-height: 1.05;
   text-align: center;
   color: rgb(233, 192, 233);
-
 }
 
 .footer-form {
@@ -465,7 +447,6 @@ button {
   min-width: 0px;
   margin-bottom: 24px;
 }
-
 
 .dubjts {
   font-size: 22px;
@@ -529,7 +510,6 @@ button {
 .ilowQg svg {
   max-width: 100%;
   fill: currentcolor;
-
 }
 
 .plans-wrap {
@@ -595,7 +575,6 @@ button {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
 }
 
 .card-img {
@@ -617,7 +596,7 @@ button {
   display: flex;
   height: 100vh;
 
-  font-family: 'Inter', 'Helvetica', 'Arial', 'system-ui', '-apple-system' !important;
+  font-family: "Inter", "Helvetica", "Arial", "system-ui", "-apple-system" !important;
   position: relative;
 }
 
@@ -636,9 +615,7 @@ button {
   top: -1rem;
 }
 
-
 .login-form-wrap {
-
   width: 600px;
   margin: auto;
   flex-direction: column;
@@ -658,13 +635,12 @@ button {
   margin-bottom: 3rem;
   letter-spacing: -2px;
   font-weight: 900 !important;
-
 }
 
 .field {
   overflow: hidden;
   width: 100%;
-  background-color: #F6F7F5;
+  background-color: #f6f7f5;
   height: 50px;
   display: flex;
   border-radius: 10px;
@@ -676,29 +652,26 @@ button {
   border: 2px solid transparent;
 }
 
-
 .field:hover {
   border: 2px solid #ccc;
 }
-
 
 .field input {
   color: rgb(103 107 95/1);
   border: none;
   outline: none;
   background: transparent;
-  transition-timing-function: cubic-bezier(0, 0, .2, 1);
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
   line-height: 48px;
   transition-duration: 75ms;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
+    backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
 }
-
 
 .field:focus-within {
   border: 2px solid #000;
 }
-
-
 
 /* Basic button styles */
 .login-page-btn {
@@ -717,9 +690,8 @@ button {
   font-weight: 600;
   font-size: 16px;
   line-height: 1.5;
-  letter-spacing: -.32px;
+  letter-spacing: -0.32px;
   margin-top: 50px;
-
 }
 
 /* .login-btn text styles */
@@ -737,22 +709,18 @@ button {
   /* You may adjust the font size as needed */
 }
 
-
 .forgot {
   display: flex;
   align-items: center;
   justify-content: center;
   color: rgb(129 41 217/1);
   padding-top: 2rem;
-
 }
 
 .under {
   text-decoration: underline;
   color: rgb(129 41 217/1);
-
 }
-
 
 .recap {
   height: 15vh;
@@ -760,6 +728,7 @@ button {
   align-items: end;
   justify-content: center;
   font-family: "Link Sans", Arial, sans-serif;
+  white-space: nowrap;
   color: rgb(103 107 95/1);
   font-size: 13px;
   line-height: 1.5;
@@ -782,8 +751,6 @@ button {
   background-position: center;
 }
 
-
-
 .recap a {
   text-decoration: underline;
   margin: 0 3px;
@@ -793,7 +760,7 @@ button {
   margin-bottom: 3rem;
   font-size: 18px;
   line-height: 1.5;
-  letter-spacing: -.32px;
+  letter-spacing: -0.32px;
   color: rgb(103 107 95/1);
   margin-top: -2rem;
   transform: translateX(4px);
@@ -812,7 +779,6 @@ button {
   font-weight: 600;
 }
 
-
 .home-page .pricing1 {
   background-color: rgb(233, 192, 233);
   height: 120vh;
@@ -821,7 +787,7 @@ button {
   padding-top: 32vh;
   align-items: center;
   padding-left: 0px;
-  gap: 5%
+  gap: 5%;
 }
 
 .pricing-bar {
@@ -845,7 +811,6 @@ button {
 }
 
 .pricing-switch {
-
   display: flex;
   align-items: flex-end;
   -webkit-box-pack: end;
@@ -923,41 +888,36 @@ button {
 }
 
 .pricing-cards {
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   display: grid;
   margin-top: 2rem;
   width: 93.7%;
 }
-
-
 
 .pricing-cards {
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   display: grid;
   margin-top: 2rem;
-  width: 93.7%;
+  width: 93%;
 }
-
 
 .pricing-cards.two {
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   display: grid;
   margin-top: 2rem;
   width: 93.7%;
 }
 
-
-.pricing-cards>div {
+.pricing-cards > div {
   margin-bottom: 1rem;
   box-shadow: 19px 16px 20px 2px rgb(0 0 0 / 5%);
-  border: 1px solid rgba(0,0,0,0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-top-left-radius: 24px;
   border-top-right-radius: 24px;
 }
-
 
 .pricing-card-wrap {
   width: 100%;
@@ -979,11 +939,11 @@ button {
   gap: 0.5rem;
 }
 
-.pricing-text-top>ul{
+.pricing-text-top > ul {
   list-style: circle;
 }
 
-.pricing-text-top>ul>li{
+.pricing-text-top > ul > li {
   font-size: 15px;
   font-weight: 600;
   letter-spacing: -1px;
@@ -1068,7 +1028,6 @@ button {
   background: transparent;
 }
 
-
 .pricing-btn-wrap a {
   width: 100%;
 }
@@ -1107,10 +1066,7 @@ button {
   font-size: 13px;
 }
 
-
-
 .home-page .users1 {
-
   background-color: rgb(243, 243, 241);
   min-height: 120vh;
   display: flex;
@@ -1118,9 +1074,8 @@ button {
   padding-top: 32vh;
   align-items: center;
   padding-left: 0px;
-  gap: 5%
+  gap: 5%;
 }
-
 
 .user-heading {
   font-family: "Link Sans", "Arial Black", Arial, sans-serif;
@@ -1202,14 +1157,12 @@ button {
   border-radius: 30px;
   overflow: hidden;
   border: 1px solid rgb(224, 226, 217);
-  background: #7C9DCA;
+  background: #7c9dca;
   /* fallback for old browsers */
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #7C9DCA, #D694A6);
+  background: linear-gradient(to bottom, #7c9dca, #d694a6);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
 }
-
 
 .user-avatar {
   width: 80px;
@@ -1291,8 +1244,6 @@ button {
   padding-top: 2rem;
 }
 
-
-
 .contact-form-wrapper {
   font-family: "Link Sans", Arial, sans-serif;
   padding: 100px 0;
@@ -1311,13 +1262,11 @@ button {
   resize: none;
 }
 
-
-
 .contact-form .form-text-area {
   font-family: "Link Sans", Arial, sans-serif;
   overflow: hidden;
   width: 100%;
-  background-color: #F6F7F5;
+  background-color: #f6f7f5;
   height: 200px;
   display: flex;
   border-radius: 10px;
@@ -1328,9 +1277,6 @@ button {
   position: relative;
   border: 2px solid transparent;
 }
-
-
-
 
 .contact-form .title {
   text-align: center;
@@ -1346,7 +1292,6 @@ button {
   text-align: center;
   margin-bottom: 2rem;
 }
-
 
 .contact-btn {
   padding: 0px;
@@ -1396,17 +1341,15 @@ button {
 }
 
 .admin-panel {
-  background-color: #F3F3F1;
+  background-color: #f3f3f1;
   min-height: 100vh;
   max-width: 100vw;
   overflow: hidden;
-
 }
 
 .hover-navitem:hover {
   background-color: #e6e6e6;
 }
-
 
 .hover-navitem-selected:hover {
   background-color: #eeeeee;
@@ -1456,7 +1399,7 @@ button {
 
 .avt.bv {
   height: 48px;
-  width: 48px
+  width: 48px;
 }
 
 .bg-sand {
@@ -1471,7 +1414,6 @@ button {
   margin-top: 3rem;
   margin-bottom: 3rem;
 }
-
 
 .setting-link {
   -webkit-box-align: center;
@@ -1501,17 +1443,14 @@ button {
   align-items: center;
 }
 
-
 .setting-link:hover {
   background-color: rgb(235, 238, 241);
 }
-
 
 .side-nav {
   padding: 28px 60px 56px;
   position: fixed;
 }
-
 
 .dTSpKS {
   width: 24px;
@@ -1522,9 +1461,7 @@ button {
   margin-left: 20vw;
   padding-top: 22px;
   min-width: 35vw;
-
 }
-
 
 .zAeKe {
   background-color: rgb(255, 255, 255);
@@ -1542,7 +1479,6 @@ button {
   display: flex;
   align-items: flex-start;
 }
-
 
 .text-concrete {
   color: rgb(103 107 95 /1);
@@ -1572,7 +1508,6 @@ button {
   padding-left: 1.3rem;
   padding-right: 1.3rem;
 }
-
 
 .cQriIP {
   flex: 0 0 32px;
@@ -1632,7 +1567,6 @@ button {
   width: 100%;
 }
 
-
 label.active-input .fields {
   background: rgba(0, 0, 0, 0);
   font-weight: 400;
@@ -1644,11 +1578,9 @@ label.active-input .fields {
   width: 100%;
   line-height: 32px;
   padding-bottom: 3px;
-  transition: opacity .2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
   border-bottom: 1px solid #d7dce1;
 }
-
-
 
 .billing-name label.active-input {
   margin-top: 8px;
@@ -1662,7 +1594,6 @@ label.active-input {
   margin-bottom: 0;
 }
 
-
 .active-span {
   position: absolute;
   top: -20px;
@@ -1674,7 +1605,7 @@ label.active-input {
   font-size: 12px;
   color: #686d73;
 
-  transition: border-bottom-color .2s ease-in-out;
+  transition: border-bottom-color 0.2s ease-in-out;
   cursor: text;
   pointer-events: none;
 }
@@ -1702,7 +1633,6 @@ label.active-input {
   line-height: 22px;
   color: rgb(83, 88, 95);
 }
-
 
 .img-circle {
   top: 10px;
@@ -1756,7 +1686,7 @@ label.active-input {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  opacity: .7;
+  opacity: 0.7;
 }
 
 .tree__section {
@@ -1771,7 +1701,6 @@ label.active-input {
   line-height: 32px !important;
 }
 
-
 .tree__section--admins ul li.user {
   padding: 5px 8px 8px;
   background-color: #00000005;
@@ -1779,7 +1708,6 @@ label.active-input {
   margin-right: 5px;
   border-radius: 3px;
 }
-
 
 .tree__section--admins ul li span.tag {
   display: inline-flex;
@@ -1799,7 +1727,6 @@ label.active-input {
   font-size: 11px;
   color: #686d73;
 }
-
 
 .tree__section--footer {
   display: flex;
@@ -1913,30 +1840,29 @@ label.active-input {
   fill: #fff;
 }
 
-
 .inin {
   width: 100%;
   border-radius: 10px;
   border-width: 1px;
-  border-color: rgba(0, 0, 0, .08);
-  background-color: hsla(0, 0%, 100%, .2) !important;
+  border-color: rgba(0, 0, 0, 0.08);
+  background-color: hsla(0, 0%, 100%, 0.2) !important;
   padding: 16px;
   padding-left: 48px;
   font-size: 18px;
   color: var(--header-color);
-  box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgba(0, 0, 0, .05);
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   outline: 2px solid transparent;
   outline-offset: 2px;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
-  transition-duration: .15s;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
+    backdrop-filter, -webkit-backdrop-filter;
+  transition-duration: 0.15s;
   transition-timing-function: linear;
-
 }
 
 .gap-4 {
   gap: 16px;
 }
-
 
 .bg-collection-card-bg {
   background-color: rgb(233, 192, 233);
@@ -1956,11 +1882,10 @@ label.active-input {
 
 .shadow-card {
   box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgb(0 0 0 / 0.1);
-  border: 1px solid rgba(0, 0, 0, .05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   width: 470px;
   margin-top: 20px;
 }
-
 
 .help-footer {
   margin-top: 104px;
@@ -1970,9 +1895,7 @@ label.active-input {
   flex-shrink: 0;
   background-color: rgb(37, 79, 26);
 
-
   color: hsl(211, 10%, 61%);
-
 }
 
 .help-footer .content {
@@ -2042,7 +1965,7 @@ label.active-input {
   letter-spacing: 0.01em;
   line-height: 1.5;
   color: rgb(30, 35, 48);
-  margin-bottom: 32px
+  margin-bottom: 32px;
 }
 
 .MIUTU {
@@ -2067,7 +1990,7 @@ label.active-input {
   margin: auto;
 }
 
-.jMYFMD>div {
+.jMYFMD > div {
   min-height: 268px;
   max-width: 756px;
   border-radius: 48px;
@@ -2092,7 +2015,6 @@ label.active-input {
   transform: translateY(40px);
 }
 
-
 .itijnk h3 {
   font-size: 24px;
   margin-bottom: 32px;
@@ -2105,8 +2027,6 @@ label.active-input {
 .itijnk p {
   margin-bottom: 32px;
 }
-
-
 
 .analytic-count-wrap {
   display: flex;
@@ -2130,10 +2050,7 @@ label.active-input {
 
 .analytic-grid {
   display: flex;
-
-
 }
-
 
 .analytic-box {
   width: 136px;
@@ -2144,7 +2061,6 @@ label.active-input {
   height: auto;
   text-align: center;
 }
-
 
 .analytic-title {
   display: flex;
@@ -2169,7 +2085,6 @@ label.active-input {
   margin-right: 6px;
 }
 
-
 .date-pick-wrap {
   display: flex;
   height: 48px;
@@ -2177,7 +2092,6 @@ label.active-input {
   margin: 0px 16px 4px;
 
   width: 100%;
-
 }
 
 .date-pick-svg {
@@ -2203,7 +2117,6 @@ label.active-input {
   cursor: pointer;
 }
 
-
 .gndtOw.empty {
   display: flex;
   -webkit-box-align: center;
@@ -2226,7 +2139,6 @@ label.active-input {
   padding: 32px 0px;
 }
 
-
 .no-activity-col {
   display: flex;
   flex-direction: column;
@@ -2244,20 +2156,17 @@ label.active-input {
   filter: none;
 }
 
-
 .no-activity-txt {
   margin: 0px 0px 4px;
   font-weight: 600;
   color: rgb(10, 11, 13);
 }
 
-
 .fFGAIg {
   display: flex;
 }
 
-
-.performance-txt{
+.performance-txt {
   display: flex;
   -webkit-box-pack: justify;
   justify-content: space-between;
@@ -2272,7 +2181,7 @@ label.active-input {
 }
 
 .performance-txt-2 {
-  color: rgba(0, 0, 0, .5);
+  color: rgba(0, 0, 0, 0.5);
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
@@ -2281,7 +2190,6 @@ label.active-input {
 .f-600 {
   font-weight: 600;
 }
-
 
 .browse-txt {
   display: block;
@@ -2292,7 +2200,6 @@ label.active-input {
   margin: 0px;
   padding: 0px;
 }
-
 
 .gXSiVi {
   border: 1px solid rgb(224, 226, 217);
@@ -2307,9 +2214,8 @@ label.active-input {
   font-size: 16px;
 }
 
-
-.trust-text p{
-  font-family: "Link Sans",  Arial, sans-serif;
+.trust-text p {
+  font-family: "Link Sans", Arial, sans-serif;
   font-size: clamp(16px, 2vmin, 20px);
   font-weight: 400 !important;
   letter-spacing: -0.02em;
@@ -2319,30 +2225,24 @@ label.active-input {
   margin-top: 30px;
 }
 
-
-
-
 /********* ************/
 
-
-
-@media (max-width: 786px) {
+@media (max-width: 600px) {
   .home-page .hero2 {
     background-color: rgb(233, 192, 233);
-    height: 120vh;
+    /* height: 120vh; */
     display: flex;
     align-items: center;
+    padding-top: 126px;
     padding-left: 12px;
     gap: 1%;
     flex-direction: column-reverse;
     justify-content: center;
   }
 
-
-
   .home-page .hero3 {
     background-color: rgb(120, 0, 22);
-    height: 110vh;
+    /* height: 110vh; */
     padding-top: 120px;
     gap: 0%;
     flex-direction: column;
@@ -2351,8 +2251,6 @@ label.active-input {
     align-items: center;
     padding-left: 14px;
   }
-
-
 
   .hero-heading-3 {
     font-family: "Link Sans", "Arial Black", Arial, sans-serif;
@@ -2364,11 +2262,9 @@ label.active-input {
     color: rgb(233, 192, 233);
   }
 
-
   .home-page .hero1 {
-
     background-color: rgb(233, 192, 233);
-    height: 105vh;
+    /* height: 105vh; */
     display: flex;
     align-items: center;
     padding-left: 14px;
@@ -2378,8 +2274,6 @@ label.active-input {
     justify-content: center;
   }
 
-
-
   .login-btn {
     height: 55px;
     padding: 0;
@@ -2387,7 +2281,6 @@ label.active-input {
     display: flex;
     align-items: center;
     justify-content: center;
-
   }
 
   .signup-btn {
@@ -2400,15 +2293,12 @@ label.active-input {
     justify-content: center;
   }
 
-
   .nav-box {
     padding-left: 12px;
     height: 72px;
   }
 
-
   .nav-box-wrap {
-
     padding-left: 14px;
     padding-right: 14px;
     padding-top: 28px;
@@ -2419,7 +2309,6 @@ label.active-input {
     align-items: center;
     gap: 5px;
   }
-
 
   .home-page .hero4 {
     background-color: rgb(243, 243, 241);
@@ -2432,23 +2321,19 @@ label.active-input {
     justify-content: center;
   }
 
-
   .hero-text-2 {
-
     margin-top: 14px;
   }
 
   .plans-text {
-    line-height: 1.0;
+    line-height: 1;
     width: 83.2%;
   }
-
 
   .card {
     min-width: 300px;
     height: 400px;
   }
-
 
   .footer h1 {
     font-size: 24px;
@@ -2478,7 +2363,6 @@ label.active-input {
   .dubjts {
     font-size: 20px;
     font-weight: 700 !important;
-
   }
 
   .footer .list-right {
@@ -2494,7 +2378,6 @@ label.active-input {
     margin-bottom: 100px;
     border-radius: 24px;
   }
-
 
   .login-main {
     padding: 3rem;
@@ -2526,14 +2409,12 @@ label.active-input {
     align-items: baseline;
   }
 
-
   .pricing-bar .pick-plan-heading {
     font-family: "Link Sans", "Arial Black", Arial, sans-serif;
     color: rgb(80, 34, 116);
     text-align: center;
     font-size: 45px;
   }
-
 
   .pricing-switch-txt {
     margin-bottom: 0.5rem;
@@ -2575,7 +2456,6 @@ label.active-input {
     width: 100%;
   }
 
-
   .contact-form {
     padding: 30px 20px;
     background-color: #ffffff;
@@ -2611,7 +2491,6 @@ label.active-input {
     margin-left: 5vw;
     padding-top: 72px;
     min-width: 35vw;
-
   }
 
   .terms-page {
@@ -2624,9 +2503,7 @@ label.active-input {
     overflow-x: hidden;
   }
 
-
   .home-page .hero1.mm {
-
     background-color: rgb(233, 192, 233);
     height: 105vh;
     display: flex;
@@ -2638,15 +2515,13 @@ label.active-input {
     justify-content: center;
   }
 
-
   .hero1-cg.ggg {
     max-width: 85vw;
     object-fit: contain;
     transform: translateY(8%);
   }
 
-
-  .jMYFMD>div {
+  .jMYFMD > div {
     border-radius: 12px;
   }
 
@@ -2654,86 +2529,78 @@ label.active-input {
     border-radius: 12px;
   }
 
-
-
   .MIUTU {
     font-size: 20px;
     padding-left: 16px;
   }
 
   .foLnLr {
-
     padding-right: 16px;
     font-size: 12px;
   }
-
 
   .browse-txt {
     display: block;
     font-size: 32px;
     font-weight: 800;
+  }
 }
 
-
-
-}
-
-.catego{
+.catego {
   display: flex;
-  border: 1px solid rgba(0, 0, 0, .3);
+  border: 1px solid rgba(0, 0, 0, 0.3);
   gap: 4px;
-  padding:  5.5px 10px;
+  padding: 5.5px 10px;
   border-radius: 9999px;
   outline: none !important;
   border: none;
 }
 
-.catego div{
+.catego div {
   font-size: 15px;
 }
 
-.catego span{
+.catego span {
   font-weight: 500;
 }
 
-.text-rs{
+.text-rs {
   font-size: 16px;
   line-height: 1.5;
   letter-spacing: -0.32px;
-  
-    color: rgb(103 107 95 / 1);
-    margin-bottom: 20px;
+
+  color: rgb(103 107 95 / 1);
+  margin-bottom: 20px;
 }
 
-
-.link-bt:hover{
+.link-bt:hover {
   transform: scale(1.02);
 }
 
-.link-box{
+.link-box {
   background: #fff;
-  box-shadow: 0 0 #0000,  0 0 #0000, inset 0px -1px 0px #e0e2d9;
+  box-shadow: 0 0 #0000, 0 0 #0000, inset 0px -1px 0px #e0e2d9;
   width: 90%;
   border-radius: 1.5rem;
   margin-bottom: 20px;
 }
 
-.p-lg{
-  padding: 1.5rem
+.p-lg {
+  padding: 1.5rem;
 }
 
-.button-image{
- min-width: 100%;
+.button-image {
+  min-width: 100%;
   overflow: hidden;
   object-fit: cover;
 }
 
-.lom:hover{
+.lom:hover {
   transform: scale(1.01);
   color: #000;
 }
 
-.nav-limst > div{
+.nav-limst > div {
   font-family: "Link Sans", "Arial Black", Arial, sans-serif;
   font-size: clamp(26px, 7.5vmin, 68px);
   border-bottom: 1px solid pink;
@@ -2741,6 +2608,32 @@ label.active-input {
   padding-top: 10px;
 }
 
-.nav-limst > div:hover{
+.nav-limst > div:hover {
   transform: scale(1.03);
+}
+
+/* ComingSoon.css */
+.coming-soon-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+  color: #fff;
+  font-family: "Arial", sans-serif;
+  text-align: center;
+}
+
+.logo {
+  width: 300px; /* Adjust the size as needed */
+  margin-bottom: 20px;
+}
+
+.coming-heading {
+  font-size: 24px;
+  margin: 0;
+}
+.soon-text {
+  color: #d12038;
 }

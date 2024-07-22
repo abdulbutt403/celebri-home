@@ -4,10 +4,11 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
+import React, {useState, useEffect } from "react";
 import "./App.css";
 import Account from "./pages/Account";
 import Admin from "./pages/Admin";
-import Analytics from "./pages/Analytics";
+// import Analytics from "./pages/Analytics";
 import Appearance from "./pages/Appearance";
 import Browse from "./pages/Browse";
 import Contact from "./pages/Contact";
@@ -31,8 +32,52 @@ import Reset from "./pages/Reset";
 import PrivateRoutes from "./PrivateRoute";
 import ShareProfile from "./pages/ShareProfile";
 import Success from "./pages/Success";
-
+import ComingSoon from "./components/coming-soon";
 function App() {
+  const [currentPageType, setCurrentPageType] = useState('');
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(()=>{
+    checkCurrentState()
+  },[])
+  // let navigateNew = useNavigate();
+  
+  const checkCurrentState = () => {
+    fetch(`https://celebri-backend.onrender.com/users/pageState`, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res);
+        if (res.success === true) {
+          if (res.currentPageType ) {
+            // navigate('/soon', { replace: true })
+            setCurrentPageType(res.currentPageType || '');
+            console.log(res.currentPageType)
+            setLoading(false);
+
+          } else {
+            setLoading(false);
+          }
+        } else {
+          setLoading(false);
+        }
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  };
+
+  if (loading) {
+    // You can show a loading spinner or some other indicator here
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <Toaster
@@ -48,7 +93,10 @@ function App() {
       />
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
+        <Route path="/" element={<ComingSoon />}/>
+      {/* {currentPageType === "simple" && <Route path="/" element={<Home />} /> } */}
+
+          <Route path="/soon" element={<ComingSoon />} />
           <Route path="/login" element={<Login />} />
           <Route path="/reset" element={<Reset />} />
           <Route path="/signup" element={<Signup />} />
@@ -59,14 +107,14 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/success" element={<Success />} />
 
-          <Route element={<PrivateRoutes/>}>
+          <Route element={<PrivateRoutes />}>
             <Route path="/admin" element={<Navigate to="/admin/links" />} />
             <Route path="/admin/links" element={<Admin />} />
             <Route path="/user/:id" element={<ShareProfile />} />
             <Route path="/admin/appearance" element={<Appearance />} />
             <Route path="/admin/account" element={<Account />} />
             <Route path="/admin/settings" element={<Settings />} />
-            <Route path="/admin/analytics" element={<Analytics />} />
+            {/* <Route path="/admin/analytics" element={<Analytics />} /> */}
           </Route>
 
           <Route path="/help" element={<Help />} />
